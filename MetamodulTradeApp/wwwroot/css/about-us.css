@@ -1,0 +1,59 @@
+﻿.about-us-div {
+    color: #AAA;
+    font-size: 1.2em;
+    line-height: 1.4;
+    max-width: 50%;
+    margin: 0 auto;
+    margin-bottom: 5em;
+}
+
+
+.about-us-div p {
+    text-align: left;
+}
+
+.about-us-heading {
+    margin-bottom: 1em;
+}
+
+.header-images {
+    max-width: 100%;
+    display: flex;
+    margin-bottom: 5em;
+}
+
+.header-images img {
+    width: 100%;
+    height: auto;
+}
+
+.column-1 {
+    flex: 0.5656;
+}
+
+.column-2 {
+    flex: 1.643;
+}
+
+
+h2 {
+    font-size: 2.7em;
+}
+
+h2::after {
+    content: "";
+    display: block;
+    border-bottom: 3px solid orange;
+    position: relative;
+    bottom: -6px; 
+    margin: 0 auto;
+}
+
+
+.first-heading::after {
+    width: 53%;
+}
+
+.second-heading::after {
+    width: 31%;
+}
