@@ -14,6 +14,13 @@ namespace MetamodulTradeApp.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Services()
+        {
+            return View();
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Add()
         {
             return View();

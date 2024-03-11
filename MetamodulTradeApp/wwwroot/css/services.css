@@ -1,0 +1,21 @@
+﻿main {
+    margin-top: 2em;
+}
+
+.map-img {
+    display: block;
+    margin: 0 auto;
+}
+
+.first-heading::after {
+    width: 76.3%;
+}
+
+.second-heading::after {
+    width: 63.7%;
+}
+
+.third-heading::after {
+    width: 66.3%;
+}
+

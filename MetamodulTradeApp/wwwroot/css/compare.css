@@ -1,0 +1,14 @@
+﻿body {
+}
+
+main {
+    margin-top: 2em;
+}
+
+
+img {
+    display: block;
+    margin: 0 auto;
+    width: 43%;
+    height: auto;
+}
