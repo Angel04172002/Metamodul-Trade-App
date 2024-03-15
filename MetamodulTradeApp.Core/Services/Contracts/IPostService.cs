@@ -9,7 +9,7 @@ namespace MetamodulTradeApp.Core.Services.Contracts
 {
     public interface IPostService
     {
-        Task<IEnumerable<AllPostsViewModel>> GetAllPostsAsync();
+        Task<IEnumerable<PostAllViewModel>> GetAllPostsAsync();
 
         Task AddPostAsync();
 

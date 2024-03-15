@@ -33,12 +33,12 @@ namespace MetamodulTradeApp.Core.Services
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<AllProductsViewModel>> GetAllProductsAsync()
+        public Task<IEnumerable<ProductAllViewModel>> GetAllProductsAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<AllProductsViewModel>> GetMyProductsAsync(string userId)
+        public Task<IEnumerable<ProductAllViewModel>> GetMyProductsAsync(string userId)
         {
             throw new NotImplementedException();
         }

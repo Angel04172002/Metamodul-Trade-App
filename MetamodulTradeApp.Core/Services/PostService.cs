@@ -28,7 +28,7 @@ namespace MetamodulTradeApp.Core.Services
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<AllPostsViewModel>> GetAllPostsAsync()
+        public async Task<IEnumerable<PostAllViewModel>> GetAllPostsAsync()
         {
             throw new NotImplementedException();
         }

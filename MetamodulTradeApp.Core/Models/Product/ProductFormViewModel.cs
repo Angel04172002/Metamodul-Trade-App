@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 using static MetamodulTradeApp.Core.Constants.ErrorMessages;
 using static MetamodulTradeApp.Infrastructure.Data.Constants.DataConstants;
-using System.Threading.Tasks;
 
 namespace MetamodulTradeApp.Core.Models.Product
 {
@@ -32,9 +27,10 @@ namespace MetamodulTradeApp.Core.Models.Product
 
 
         [Required(ErrorMessage = RequireErrorMessage)]
-        public decimal Price { get; set; } 
+        public decimal Price { get; set; }
 
 
+        [Required(ErrorMessage = RequireErrorMessage)]
         public string ImageUrl { get; set; } = null!;
 
         public DateTime CreatedOn { get; set; }

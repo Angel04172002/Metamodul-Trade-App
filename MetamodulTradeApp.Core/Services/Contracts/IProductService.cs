@@ -9,8 +9,8 @@ namespace MetamodulTradeApp.Core.Services.Contracts
 {
     public interface IProductService
     {
-        Task<IEnumerable<AllProductsViewModel>> GetAllProductsAsync();
-        Task<IEnumerable<AllProductsViewModel>> GetMyProductsAsync(string userId);
+        Task<IEnumerable<ProductAllViewModel>> GetAllProductsAsync();
+        Task<IEnumerable<ProductAllViewModel>> GetMyProductsAsync(string userId);
 
         Task LikeProductAsync();
 

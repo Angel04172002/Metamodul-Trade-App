@@ -2,7 +2,7 @@
 
 namespace MetamodulTradeApp.Core.Models.Post
 {
-    public class AllPostsViewModel
+    public class PostAllViewModel
     {
 
         public int Id { get; set; }
@@ -13,6 +13,5 @@ namespace MetamodulTradeApp.Core.Models.Post
 
         public DateTime CreatedOn { get; set; }
 
-        public string CreatorId { get; set; } = string.Empty;
     }
 }
