@@ -13,12 +13,15 @@ namespace MetamodulTradeApp.Controllers
             _logger = logger;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult Privacy()
+
+        [HttpGet]
+        public IActionResult Contacts()
         {
             return View();
         }

@@ -18,6 +18,14 @@ namespace MetamodulTradeApp.Controllers
             return View();
         }
 
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Gallery()
+        {
+            return View();
+        }
+
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Compare()

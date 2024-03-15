@@ -1,0 +1,72 @@
+﻿body {
+}
+
+
+main {
+    margin-top: 2em;
+}
+
+
+div p {
+    text-align: center;
+}
+
+p {
+    font-size: 1.6em;
+}
+
+
+.sub-container {
+    margin-bottom: 4em;
+}
+
+
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0 auto;
+    flex-direction: column;
+}
+
+.request-form {
+    transform: translateX(5%);
+    width: 65%;
+}
+
+.request-form div {
+   width: 100%;
+   margin: 0 auto;
+   margin-bottom: 2em;
+}
+
+
+.phone-div,
+.topic-div,
+.message-div {
+    text-align: start;
+    width: 50%;
+}
+
+/*.topic-label,
+.phone-label,
+.comment-label {
+    margin-right: auto;
+    text-align: start;
+}*/
+
+/*
+.topic-div {
+    width: 50%;
+}*/
+
+.request-submit-btn {
+    margin-left: 30%;
+    margin-top: 5%;
+    background-color: orange;
+    color: black;
+    width: 2.5em;
+    margin: 0 auto;
+    margin-top: 1em;
+}

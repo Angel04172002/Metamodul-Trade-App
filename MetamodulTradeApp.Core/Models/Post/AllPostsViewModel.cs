@@ -8,6 +8,6 @@ namespace MetamodulTradeApp.Core.Models.Post
 {
     public class AllPostsViewModel
     {
-
+        
     }
 }
