@@ -23,29 +23,29 @@ namespace MetamodulTradeApp.Infrastructure.Data.Configurations
                 new Post()
                 {
                     Id = 1,
-                    Title = "My First Post",
-                    Description = "Test Description",
+                    Title = "Пост за камиони",
+                    Description = "Описание на пост 1 за камиони",
                     CreatedOn = DateTime.Now.AddMonths(-10),
                     ImageUrl = "https://i.stack.imgur.com/GsDIl.jpg",
-                    CreatorId = ""
+                    CreatorId = "ece06352-f235-4345-94a7-1a2c12f03ac6"
                 },
                 new Post()
                 {
-                    Id = 1,
-                    Title = "My First Post",
-                    Description = "Test Description",
-                    CreatedOn = DateTime.Now.AddMonths(-10),
+                    Id = 2,
+                    Title = "Пост за природен газ",
+                    Description = "Описание на пост 2 за природен газ",
+                    CreatedOn = DateTime.Now.AddMonths(-4),
                     ImageUrl = "https://i.stack.imgur.com/GsDIl.jpg",
-                    CreatorId = ""
+                    CreatorId = "ece06352-f235-4345-94a7-1a2c12f03ac6"
                 },
                 new Post()
                 {
-                    Id = 1,
-                    Title = "My First Post",
-                    Description = "Test Description",
-                    CreatedOn = DateTime.Now.AddMonths(-10),
+                    Id = 3,
+                    Title = "Пост за масла",
+                    Description = "Описание на пост 3 за масла",
+                    CreatedOn = DateTime.Now.AddMonths(-1),
                     ImageUrl = "https://i.stack.imgur.com/GsDIl.jpg",
-                    CreatorId = ""
+                    CreatorId = "ece06352-f235-4345-94a7-1a2c12f03ac6"
                 },
             };
 

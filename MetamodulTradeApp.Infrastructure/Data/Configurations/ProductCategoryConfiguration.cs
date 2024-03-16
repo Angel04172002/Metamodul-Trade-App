@@ -23,18 +23,13 @@ namespace MetamodulTradeApp.Infrastructure.Data.Configurations
                 new ProductCategory()
                 {
                     Id = 1,
-                    Name = ""
+                    Name = "Камиони"
                 },
                 new ProductCategory()
                 {
-                    Id = 1,
-                    Name = ""
-                },
-                new ProductCategory()
-                {
-                    Id = 1,
-                    Name = ""
-                },
+                    Id = 2,
+                    Name = "Масла"
+                }
             };
 
             return productCategories;

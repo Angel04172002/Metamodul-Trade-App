@@ -23,33 +23,25 @@ namespace MetamodulTradeApp.Infrastructure.Data.Configurations
                 new Product()
                 {
                     Id = 1,
-                    Name = "Oil",
-                    Description = "Oil for spinning wheel",
+                    Name = "Масло",
+                    Description = "Моторно масло за двигател",
                     ImageUrl = "https://www.stitchandskein.com/media/2021/08/wheel-oil.jpg",
-                    Price = 30,
+                    Price = 70,
                     CreatedOn = DateTime.Now.AddMonths(-3),
-                    CreatorId = ""
+                    CreatorId = "ece06352-f235-4345-94a7-1a2c12f03ac6",
+                    CategoryId = 2
                 },
                 new Product()
                 {
-                    Id = 1,
-                    Name = "Oil",
-                    Description = "Oil for spinning wheel",
+                    Id = 2,
+                    Name = "Камион",
+                    Description = "Камион за превоз на машини",
                     ImageUrl = "https://www.stitchandskein.com/media/2021/08/wheel-oil.jpg",
-                    Price = 30,
+                    Price = 15000,
                     CreatedOn = DateTime.Now.AddMonths(-3),
-                    CreatorId = ""
-                },
-                new Product()
-                {
-                    Id = 1,
-                    Name = "Oil",
-                    Description = "Oil for spinning wheel",
-                    ImageUrl = "https://www.stitchandskein.com/media/2021/08/wheel-oil.jpg",
-                    Price = 30,
-                    CreatedOn = DateTime.Now.AddMonths(-3),
-                    CreatorId = ""
-                },
+                    CreatorId = "ece06352-f235-4345-94a7-1a2c12f03ac6",
+                    CategoryId = 1
+                }
             };
 
             return products;
