@@ -21,6 +21,7 @@ namespace MetamodulTradeApp.Infrastructure.Data.Constants
         public const int ClientRequestTopicMaxLength = 30;
         public const int ClientRequestMessageMinLength = 10;
         public const int ClientRequestMessageMaxLength = 400;
+        public const int ClientRequestPhoneNumberMinLength = 7;
         public const int ClientRequestPhoneNumberMaxLength = 10;
 
         public const int ProductNameMinLength = 5;
