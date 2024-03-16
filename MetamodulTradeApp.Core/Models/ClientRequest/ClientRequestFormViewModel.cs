@@ -10,6 +10,15 @@ namespace MetamodulTradeApp.Core.Models.ClientRequest
 
         [Required(ErrorMessage = RequireErrorMessage)]
         [StringLength(
+            ClientRequestPhoneNumberMaxLength,
+            MinimumLength = ClientRequestPhoneNumberMinLength,
+            ErrorMessage = StringLengthErrorMessage
+            )]
+        public string PhoneNumber { get; set; } = null!;
+
+
+        [Required(ErrorMessage = RequireErrorMessage)]
+        [StringLength(
             ClientRequestTopicMaxLength,
             MinimumLength = ClientRequestTopicMinLength,
             ErrorMessage = StringLengthErrorMessage
