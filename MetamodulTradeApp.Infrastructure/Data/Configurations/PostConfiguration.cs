@@ -1,11 +1,6 @@
 ﻿using MetamodulTradeApp.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MetamodulTradeApp.Infrastructure.Data.Configurations
 {
@@ -13,6 +8,11 @@ namespace MetamodulTradeApp.Infrastructure.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Post> builder)
         {
+            builder
+               .HasMany(e => e.Comments)
+               .WithOne(e => e.Post)
+               .OnDelete(DeleteBehavior.Restrict);
+
             builder.HasData(SeedPosts());
         }
 

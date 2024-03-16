@@ -1,4 +1,5 @@
-﻿using MetamodulTradeApp.Infrastructure.Data.Models;
+﻿using MetamodulTradeApp.Infrastructure.Data.Configurations;
+using MetamodulTradeApp.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,24 +28,14 @@ namespace MetamodulTradeApp.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
 
-            builder
-                .Entity<Post>()
-                .HasMany(e => e.Comments)
-                .WithOne(e => e.Post)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder
-                .Entity<UserProduct>()
-                .HasOne(e => e.Product)
-                .WithMany(e => e.UsersProducts)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder
-                .Entity<UserProduct>()
-                .HasKey(pk => new { pk.UserId, pk.ProductId });
-              
-
             base.OnModelCreating(builder);
+
+            builder.ApplyConfiguration(new ClientRequestConfiguration());
+            builder.ApplyConfiguration(new PostConfiguration());
+            builder.ApplyConfiguration(new CommentConfiguration());
+            builder.ApplyConfiguration(new ProductCategoryConfiguration());
+            builder.ApplyConfiguration(new ProductConfiguration());
+            builder.ApplyConfiguration(new UserProductConfiguration());
         }
     }
 }
