@@ -17,7 +17,12 @@ namespace MetamodulTradeApp.Infrastructure.Data.Models
         [Column(TypeName = "nvarchar")]
         [MaxLength(ClientRequestTopicMaxLength)]
         [Comment("Client's topic")]
-        public string Topic { get; set; } = string.Empty;   
+        public string Topic { get; set; } = string.Empty;
+
+        [Required]
+        [MaxLength(ClientRequestPhoneNumberMaxLength)]
+        [Comment("Client's phone number")]
+        public string PhoneNumber { get; set; } = string.Empty;
 
         [Required]
         [Column(TypeName = "nvarchar")]
