@@ -15,6 +15,7 @@ namespace MetamodulTradeApp.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous] 
         public IActionResult Add()
         {
             return View();

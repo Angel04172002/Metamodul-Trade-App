@@ -1,5 +1,65 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model PostFormViewModel
+
+
 @{
+    ViewData["Title"] = "Пост";
 }
+
+
+<div class="form-container text-center">
+
+
+    <h1 class="main-heading text-center">Добави пост</h1>
+
+
+    <form asp-controller="Post" asp-action="Add" class="post-form">
+
+
+        <div class="row mb-3">
+            <div class="col-sm-10 form-group title-div">
+                <label asp-for="@Model.Title" class="title-label" for="exampleFormControlInput1">Заглавие</label>
+                <input name="title" asp-for="@Model.Title" type="text" class="form-control" id="exampleFormControlInput1">
+                <span asp-validation-for="@Model.Title" class="text-danger"></span>
+
+            </div>
+        </div>
+
+
+
+        <div class="row mb-3">
+
+            <div class="col-sm-10 form-group description-div">
+                <label asp-for="@Model.Description" class="description-label" for="exampleFormControlTextarea1">Описание</label>
+                <textarea name="description" asp-for="@Model.Description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <span asp-validation-for="@Model.Description" class="text-danger"></span>
+            </div>
+
+   
+        </div>
+
+
+        <div class="row mb-3">
+
+            <div class="col-sm-10 form-group image-div">
+                <label asp-for="@Model.ImageUrl" class="image-label" for="exampleFormControlInput1">Изображение</label>
+                <input name="imageUrl" asp-for="@Model.ImageUrl" type="text" class="form-control" id="exampleFormControlInput1">
+
+            </div>
+         
+
+        </div>
+
+        <div class="col-10">
+            <button id="post-submit-btn" type="submit" class="w-100 btn btn-primary">Добави</button>
+        </div>
+    </form>
+
+</div>
+
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

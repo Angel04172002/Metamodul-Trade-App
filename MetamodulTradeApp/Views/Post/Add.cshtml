@@ -1,4 +1,14 @@
-﻿
+﻿@model PostFormViewModel
+
 @{
     ViewData["Title"] = "Add Post";
+}
+
+
+<partial name="_PostFormPartial" model="Model" />
+
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/layout.css" />
+    <link rel="stylesheet" href="~/css/post-add-form.css" />
 }
