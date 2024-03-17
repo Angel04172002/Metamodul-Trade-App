@@ -31,21 +31,20 @@ p {
     transform: translateY(-5%);
 }
 
-.post-form {
+.edit-form {
     transform: translateX(5%);
     width: 65%;
 }
 
-    .post-form div {
+    .edit-form div {
         width: 100%;
         margin: 0 auto;
         margin-bottom: 2em;
     }
 
 
-.title-div,
-.description-div,
-.image-div {
+.text-div,
+.textarea-div {
     text-align: start;
     width: 50%;
 }
@@ -62,7 +61,7 @@ p {
     width: 50%;
 }*/
 
-.post-submit-btn {
+.submit-btn {
     margin-left: 30%;
     margin-top: 5%;
     background-color: orange;

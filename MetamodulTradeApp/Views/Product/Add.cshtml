@@ -1,5 +1,20 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model ProductFormViewModel
+
 @{
+    ViewData["Title"] = "Add Product";
 }
+
+
+<partial name="_ProductFormPartial" model="Model" />
+
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/add-form-style.css" />
+    <link rel="stylesheet" href="~/css/layout.css" />
+}
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
