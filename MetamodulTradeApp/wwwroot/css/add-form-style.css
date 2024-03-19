@@ -6,6 +6,9 @@ main {
     margin-top: 0.7em;
 }
 
+h1 {
+    margin-bottom: 1em;
+}
 
 div p {
     text-align: center;
@@ -60,6 +63,10 @@ p {
 .topic-div {
     width: 50%;
 }*/
+
+.text-label {
+    text-align: start;
+}
 
 .submit-btn {
     margin-left: 30%;

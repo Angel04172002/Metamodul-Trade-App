@@ -1,0 +1,38 @@
+﻿body {
+}
+
+.card img {
+    display: block;
+    height: 60%;
+}
+
+
+
+.card-title {
+    font-size: 1.9em;
+    text-align: center;
+}
+
+.card-body {
+  /*  min-height: 50%;*/
+  /*  font-size: 1.45em;*/
+    padding: 3.4em;
+    padding-bottom: 1em;
+}
+
+.card-text {
+    font-size: 1.1em;
+    font-style: italic;
+    text-align: center;
+}
+
+
+.card-body button {
+    margin-top: 1em;
+    background-color: orange;
+}
+
+
+    .card-body button:hover {
+        background-color: darkorange;
+    }

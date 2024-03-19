@@ -33,6 +33,12 @@ namespace MetamodulTradeApp.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult Details()
+        {
+            return View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> Edit(PostFormViewModel model, int id)
         {
