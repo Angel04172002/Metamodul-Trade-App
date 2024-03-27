@@ -11,10 +11,10 @@ namespace MetamodulTradeApp.Core.Services.Contracts
     {
         Task<IEnumerable<PostAllViewModel>> GetAllPostsAsync();
 
-        Task AddPostAsync();
+        Task AddPostAsync(PostFormViewModel model);
 
-        Task EditPostAsync();
+        Task EditPostAsync(PostFormViewModel model, int id);
 
-        Task RemovePostAsync();
+        Task RemovePostAsync(int id);
     }
 }

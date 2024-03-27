@@ -1,4 +1,6 @@
-﻿using MetamodulTradeApp.Data;
+﻿using MetamodulTradeApp.Core.Services;
+using MetamodulTradeApp.Core.Services.Contracts;
+using MetamodulTradeApp.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,6 +10,8 @@ namespace MetamodulTradeApp.Extensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
+            services.AddScoped<IPostService, PostService>();
+
             return services;
         }
 
