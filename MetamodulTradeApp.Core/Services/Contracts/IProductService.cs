@@ -17,8 +17,8 @@ namespace MetamodulTradeApp.Core.Services.Contracts
         Task UnlikeProductAsync();
 
         Task AddProductAsync(ProductFormViewModel model);
-        Task EditProductAsync(ProductFormViewModel model);
-        Task DeleteProductAsync();
+        Task EditProductAsync(ProductFormViewModel model, int id);
+        Task DeleteProductAsync(int id);
 
     }
 }
