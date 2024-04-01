@@ -60,6 +60,32 @@ namespace MetamodulTradeApp.Core.Services
                 .ToListAsync();
         }
 
+        public async Task<PostDetailsViewModel?> GetDetailsAsync(int id)
+        {
+            return await context.Posts
+                .AsNoTracking()
+                .Where(p => p.Id == id)
+                .Select(p => new PostDetailsViewModel()
+                {
+                    Id = p.Id,
+                    Description = p.Description,
+                    ImageUrl = p.ImageUrl,
+                    CreatedOn = p.CreatedOn.ToString(),
+                    Title = p.Title,
+                    Comments = p.Comments.Select(c => new Models.Comment.CommentAllViewModel()
+                    {
+                        Id = c.Id,
+                        CreatedOn = c.CreatedOn.ToString(),
+                        CreatorId = c.CreatorId,
+                        Text = c.Text,
+                        PostId = c.PostId
+                    })
+                    .ToList()
+                })
+                .FirstOrDefaultAsync();
+                
+        }
+
         public async Task RemovePostAsync(int id)
         {
             Post? post = await context.Posts.FindAsync(id);

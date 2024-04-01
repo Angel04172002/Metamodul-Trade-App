@@ -93,7 +93,15 @@ namespace MetamodulTradeApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            return View();
+            var postDetails = await postService.GetDetailsAsync(id);
+
+            if(postDetails == null)
+            {
+                return BadRequest();
+            }
+
+
+            return View(postDetails);
         }
     }
 }

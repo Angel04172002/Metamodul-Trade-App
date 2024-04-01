@@ -16,5 +16,7 @@ namespace MetamodulTradeApp.Core.Services.Contracts
         Task EditPostAsync(PostFormViewModel model, int id);
 
         Task RemovePostAsync(int id);
+
+        Task<PostDetailsViewModel?> GetDetailsAsync(int id);
     }
 }
