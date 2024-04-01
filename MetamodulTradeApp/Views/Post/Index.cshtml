@@ -1,19 +1,27 @@
-﻿
+﻿@model IEnumerable<PostAllViewModel>
+
+
 @{
     ViewData["Title"] = "Постове";
 }
 <div class="row row-cols-1 row-cols-md-3 g-4">
-    <div class="col">
-        <div class="card h-100">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAAAJH2rx303IXOHxcp3Xrxd8R8Fsok21tKQ&usqp=CAU" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Last updated 3 mins ago.</p>
-                <button id="open-submit" type="submit" class="w-100 btn open-btn btn-primary">Отвори</button>
+
+    @foreach(var post in Model)
+    {
+        <div class="col">
+            <div class="card h-100">
+                <img src="@post.ImageUrl" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">@post.Title</h5>
+                    <p class="card-text">@post.CreatedOn</p>
+                    <button asp-action="Details" asp-route-id = "@post.Id" id="open-submit" type="submit" class="w-100 btn open-btn btn-primary">Отвори</button>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col">
+    }
+
+
+   @*  <div class="col">
         <div class="card h-100">
             <img src="https://img.etimg.com/thumb/width-640,height-480,imgsize-51826,resizemode-75,msid-86310328/industry/auto/lcv-hcv/daimler-india-ready-for-prolonged-truck-upcycle-says-md/untitled-7.jpg" class="card-img-top" alt="...">
             <div class="card-body">
@@ -42,7 +50,7 @@
                 <button id="open-submit" type="submit" class="w-100 btn open-btn btn-primary">Отвори</button>
             </div>
         </div>
-    </div>
+    </div> *@
 </div>
 
 @section Styles {

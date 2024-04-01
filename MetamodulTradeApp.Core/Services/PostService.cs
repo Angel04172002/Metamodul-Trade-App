@@ -3,12 +3,6 @@ using MetamodulTradeApp.Core.Services.Contracts;
 using MetamodulTradeApp.Data;
 using MetamodulTradeApp.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MetamodulTradeApp.Core.Services
 {
@@ -40,17 +34,15 @@ namespace MetamodulTradeApp.Core.Services
         {
             Post? post = await context.Posts.FindAsync(id);
 
-            if (post == null)
+            if (post != null)
             {
-                throw new Exception();
+                post.Title = model.Title;
+                post.Description = model.Description;
+                post.ImageUrl = model.ImageUrl;
+                post.CreatedOn = DateTime.Parse(model.CreatedOn);
+
+                await context.SaveChangesAsync();
             }
-
-            post.Title = model.Title;
-            post.Description = model.Description;
-            post.ImageUrl = model.ImageUrl;
-            post.CreatedOn = model.CreatedOn;
-
-            await context.SaveChangesAsync();
 
         }
 
@@ -62,7 +54,7 @@ namespace MetamodulTradeApp.Core.Services
                 {
                     Id = p.Id,
                     ImageUrl = p.ImageUrl,
-                    CreatedOn = p.CreatedOn,
+                    CreatedOn = p.CreatedOn.ToString(),
                     Title = p.Title
                 })
                 .ToListAsync();
@@ -72,13 +64,12 @@ namespace MetamodulTradeApp.Core.Services
         {
             Post? post = await context.Posts.FindAsync(id);
 
-            if (post == null)
+            if (post != null)
             {
-                throw new Exception();
+                context.Posts.Remove(post);
+                await context.SaveChangesAsync();
             }
-
-            context.Posts.Remove(post);
-            await context.SaveChangesAsync();
+    
         }
 
    
