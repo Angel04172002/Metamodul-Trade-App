@@ -16,7 +16,7 @@ namespace MetamodulTradeApp.Core.Models.Comment
         public string Text { get; set; } = null!;
 
 
-        public DateTime CreatedOn { get; set; }
+        public string CreatedOn { get; set; } = null!;
 
 
         public string CreatorId { get; set; } = null!;

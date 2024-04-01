@@ -10,7 +10,7 @@
 
         public string Message { get; set; } = string.Empty;
 
-        public DateTime CreatedOn { get; set; }
+        public string CreatedOn { get; set; } = string.Empty;
 
         public string CreatorId { get; set; } = string.Empty;
 

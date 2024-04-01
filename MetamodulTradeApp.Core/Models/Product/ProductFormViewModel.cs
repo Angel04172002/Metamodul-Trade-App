@@ -33,14 +33,17 @@ namespace MetamodulTradeApp.Core.Models.Product
         [Required(ErrorMessage = RequireErrorMessage)]
         public string ImageUrl { get; set; } = null!;
 
-        public DateTime CreatedOn { get; set; }
+        public string CreatedOn { get; set; } = null!;
 
 
 
         [Required(ErrorMessage = RequireErrorMessage)]
         public int CategoryId { get; set; }
 
-
         public string CreatorId { get; set; } = null!;
+
+        public IList<ProductCategoryViewModel> Categories { get; set; }
+            = new List<ProductCategoryViewModel>(); 
+
     }
 }

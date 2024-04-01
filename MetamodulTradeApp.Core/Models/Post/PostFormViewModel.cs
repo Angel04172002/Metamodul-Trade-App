@@ -25,7 +25,7 @@ namespace MetamodulTradeApp.Core.Models.Post
         [Required(ErrorMessage = RequireErrorMessage)]
         public string ImageUrl { get; set; } = null!;
 
-        public DateTime CreatedOn { get; set; }
+        public string CreatedOn { get; set; } = null!;
 
         public string CreatorId { get; set; } = null!;
     }

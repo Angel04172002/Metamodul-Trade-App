@@ -18,12 +18,17 @@ namespace MetamodulTradeApp.Controllers
         [AllowAnonymous] 
         public IActionResult Add()
         {
-            return View();
+            var model = new PostFormViewModel();
+
+
+            return View(model);
         }
 
         [HttpPost]
         public async Task<IActionResult> Add(PostFormViewModel model)
         {
+
+
             return RedirectToAction(nameof(Index));
         }
 

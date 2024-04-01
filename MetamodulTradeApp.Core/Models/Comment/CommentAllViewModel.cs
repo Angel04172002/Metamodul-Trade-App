@@ -7,7 +7,7 @@
         public string Text { get; set; } = string.Empty;
 
 
-        public DateTime CreatedOn { get; set; }
+        public string CreatedOn { get; set; } = null!;
 
     
         public string CreatorId { get; set; } = string.Empty;

@@ -13,7 +13,7 @@
    
         public string ImageUrl { get; set; } = string.Empty;
 
-        public DateTime CreatedOn { get; set; }
+        public string CreatedOn { get; set; } = null!;
 
         public int CategoryId { get; set; }
 
