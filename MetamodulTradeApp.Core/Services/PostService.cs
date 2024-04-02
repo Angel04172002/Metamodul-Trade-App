@@ -46,11 +46,18 @@ namespace MetamodulTradeApp.Core.Services
 
         }
 
-        public async Task<IEnumerable<PostAllViewModel>> GetAllPostsAsync()
+        public async Task<PostAllViewModel> GetAllPostsAsync(
+            string searchTerm = "",
+            int itemsPerPage = 0,
+            int currentPage = 0
+            )
         {
-            return await context.Posts
+
+            var posts = await context.Posts
                 .AsNoTracking()
-                .Select(p => new PostAllViewModel()
+                .Skip((currentPage - 1) * itemsPerPage)
+                .Take(itemsPerPage)
+                .Select(p => new PostServiceModel()
                 {
                     Id = p.Id,
                     ImageUrl = p.ImageUrl,
@@ -58,6 +65,14 @@ namespace MetamodulTradeApp.Core.Services
                     Title = p.Title
                 })
                 .ToListAsync();
+
+
+            return new PostAllViewModel()
+            {
+                Posts = posts,
+                CurrentPage = currentPage,
+                TotalPostsCount = posts.Count()
+            };
         }
 
         public async Task<PostDetailsViewModel?> GetDetailsAsync(int id)
@@ -86,11 +101,11 @@ namespace MetamodulTradeApp.Core.Services
                 
         }
 
-        public async Task<PostAllViewModel?> GetPostByIdAsync(int id)
+        public async Task<PostServiceModel?> GetPostByIdAsync(int id)
         {
             return await context.Posts
                 .Where(p => p.Id == id)
-                .Select(p => new PostAllViewModel()
+                .Select(p => new PostServiceModel()
                 {
                     Id = p.Id,
                     ImageUrl = p.ImageUrl,

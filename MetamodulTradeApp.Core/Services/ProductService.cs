@@ -80,7 +80,7 @@ namespace MetamodulTradeApp.Core.Services
                     ImageUrl = p.ImageUrl,
                     Price = p.Price,
                     CategoryId = p.CategoryId,
-                    CreatedOn = p.CreatedOn
+                    CreatedOn = p.CreatedOn.ToString()
                 })
                 .ToListAsync();
         }

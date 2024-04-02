@@ -4,14 +4,13 @@ namespace MetamodulTradeApp.Core.Models.Post
 {
     public class PostAllViewModel
     {
+        public const int PostsPerPage = 6;
 
-        public int Id { get; set; }
+        public int CurrentPage { get; set; } = 1;
 
-        public string Title { get; set; } = string.Empty;
+        public int TotalPostsCount { get; set; }
 
-        public string ImageUrl { get; set; } = string.Empty;
-
-        public string CreatedOn { get; set; } = null!;
-
+        public IEnumerable<PostServiceModel> Posts { get; set; }
+          = new List<PostServiceModel>();   
     }
 }

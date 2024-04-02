@@ -19,9 +19,11 @@ namespace MetamodulTradeApp.Controllers
 
         //Return view with all posts
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index([FromQuery] PostAllViewModel model)
         {
-            var posts = await postService.GetAllPostsAsync();
+            //TODO: Implement searching by keyword
+            
+            var posts = await postService.GetAllPostsAsync("", PostAllViewModel.PostsPerPage, model.CurrentPage);
 
             return View(posts);
         }
@@ -68,11 +70,6 @@ namespace MetamodulTradeApp.Controllers
             return View();
         }
 
-        [HttpGet]
-        public IActionResult Details()
-        {
-            return View();
-        }
 
         [HttpPost]
         public async Task<IActionResult> Edit(PostFormViewModel model, int id)

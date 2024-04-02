@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PostAllViewModel>
+﻿@model PostAllViewModel
 
 
 @{
@@ -6,7 +6,7 @@
 }
 <div class="row row-cols-1 row-cols-md-3 g-4">
 
-    @foreach(var post in Model)
+    @foreach (var post in Model.Posts)
     {
         <div class="col">
             <div class="card h-100">
@@ -14,46 +14,78 @@
                 <div class="card-body">
                     <h5 class="card-title">@post.Title</h5>
                     <p class="card-text">@post.CreatedOn</p>
-                    <button asp-action="Details" asp-route-id = "@post.Id" id="open-submit" type="submit" class="w-100 btn open-btn btn-primary">Отвори</button>
+                    <button asp-action="Details" asp-route-id="@post.Id" id="open-submit" type="submit" class="w-100 btn open-btn btn-primary">Отвори</button>
                 </div>
             </div>
         </div>
     }
 
-
-   @*  <div class="col">
-        <div class="card h-100">
-            <img src="https://img.etimg.com/thumb/width-640,height-480,imgsize-51826,resizemode-75,msid-86310328/industry/auto/lcv-hcv/daimler-india-ready-for-prolonged-truck-upcycle-says-md/untitled-7.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Last updated 3 mins ago.</p>
-                <button id="open-submit" type="submit" class="w-100 btn open-btn btn-primary">Отвори</button>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card h-100">
-            <img src="https://st4.depositphotos.com/1020618/21282/i/450/depositphotos_212828960-stock-photo-truck-with-container-on-road.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Last updated 3 mins ago.</p>
-                <button id="open-submit" type="submit" class="w-100 btn open-btn btn-primary">Отвори</button>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card h-100">
-            <img src="https://5.imimg.com/data5/SELLER/Default/2022/12/SP/LA/DB/28592736/tata-signa-5530-truck.png" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Last updated 3 mins ago.</p>
-                <button id="open-submit" type="submit" class="w-100 btn open-btn btn-primary">Отвори</button>
-            </div>
-        </div>
-    </div> *@
 </div>
+
+
+
+@{
+    var previousPage = Model.CurrentPage - 1; if (previousPage < 1) { previousPage = 1; }
+    var maxPage = Math.Ceiling((double)Model.TotalPostsCount / PostAllViewModel.PostsPerPage);
+} 
+
+@* <div class="row mb-5">
+    <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-start"> <a class="btn btn-primary " asp-controller="Post" asp-action="Index" asp-route-currentPage="@previousPage" ></a> </div>
+
+    @{
+        var shouldButtonBeDisabled = Model.CurrentPage == maxPage || !Model.Posts.Any();
+    } 
+    <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end"> 
+        <a class="btn btn-primary @(shouldButtonBeDisabled ? "disabled" : string.Empty)" asp-controller="Post" asp-action="Index" asp-route-currentPage="@(Model.CurrentPage + 1)"></a> </div>
+</div>  *@
+
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : string.Empty)">
+            <a class="page-link" asp-controller="Post" asp-action="Index" asp-route-currentPage="@previousPage" tabindex="-1">Previous</a>
+        </li>
+
+  @*       <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li> *@
+
+
+        <li class="page-item">
+            <a class="page-link" asp-controller="Post" asp-action="Index" asp-route-currentPage="@(Model.CurrentPage + 1)" tabindex="-1">Next</a>
+        </li>
+    </ul>
+</nav>
+
+
+
+
+@if (!Model.Posts.Any())
+{
+     <h2 class="text-center">No posts found by the given criteria!</h2>
+}
+
+
 
 @section Styles {
     <link rel="stylesheet" href="~/css/post-style.css" />
     <link rel="stylesheet" href="~/css/layout.css" />
+    @* <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet"/> *@
 }
+
+
+@* @section Scripts {
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap-paginator.min.js"></script>
+
+    <script type='text/javascript'>
+        var options = {
+            currentPage: 3,
+            totalPages: 10
+        }
+
+        $('#example').bootstrapPaginator(options);
+    </script>
+
+} *@
