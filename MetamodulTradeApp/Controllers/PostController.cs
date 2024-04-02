@@ -63,6 +63,8 @@ namespace MetamodulTradeApp.Controllers
         [HttpGet]   
         public async Task<IActionResult> Edit(int id)
         {
+            //var post = await postService.Get
+
             return View();
         }
 

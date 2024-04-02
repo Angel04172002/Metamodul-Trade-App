@@ -86,6 +86,20 @@ namespace MetamodulTradeApp.Core.Services
                 
         }
 
+        public async Task<PostAllViewModel?> GetPostByIdAsync(int id)
+        {
+            return await context.Posts
+                .Where(p => p.Id == id)
+                .Select(p => new PostAllViewModel()
+                {
+                    Id = p.Id,
+                    ImageUrl = p.ImageUrl,
+                    CreatedOn = p.CreatedOn.ToString(),
+                    Title = p.Title
+                })
+                .FirstOrDefaultAsync();
+        }
+
         public async Task RemovePostAsync(int id)
         {
             Post? post = await context.Posts.FindAsync(id);

@@ -11,6 +11,8 @@ namespace MetamodulTradeApp.Core.Services.Contracts
     {
         Task<IEnumerable<PostAllViewModel>> GetAllPostsAsync();
 
+        Task<PostAllViewModel?> GetPostByIdAsync(int id);
+
         Task AddPostAsync(PostFormViewModel model);
 
         Task EditPostAsync(PostFormViewModel model, int id);
