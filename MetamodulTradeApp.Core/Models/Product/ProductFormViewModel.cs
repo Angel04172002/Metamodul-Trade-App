@@ -35,12 +35,11 @@ namespace MetamodulTradeApp.Core.Models.Product
 
         public string CreatedOn { get; set; } = string.Empty;
 
+        public string CreatorId { get; set; } = string.Empty;
 
 
         [Required(ErrorMessage = RequireErrorMessage)]
         public int CategoryId { get; set; }
-
-        public string CreatorId { get; set; } = string.Empty;
 
         public IList<ProductCategoryViewModel> Categories { get; set; }
             = new List<ProductCategoryViewModel>(); 

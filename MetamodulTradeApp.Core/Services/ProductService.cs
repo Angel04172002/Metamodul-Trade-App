@@ -3,11 +3,6 @@ using MetamodulTradeApp.Core.Services.Contracts;
 using MetamodulTradeApp.Data;
 using MetamodulTradeApp.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MetamodulTradeApp.Core.Services
 {
@@ -29,7 +24,7 @@ namespace MetamodulTradeApp.Core.Services
                 Price = model.Price,
                 CategoryId = model.CategoryId,
                 CreatedOn = DateTime.Now,
-                CreatorId = "",
+                CreatorId = model.CreatorId,
                 ImageUrl = model.ImageUrl
             };
 
@@ -41,39 +36,36 @@ namespace MetamodulTradeApp.Core.Services
         {
             Product? product = await context.Products.FindAsync(id);
 
-            if (product == null)
+            if (product != null)
             {
-                throw new Exception();
+                context.Products.Remove(product);
+                await context.SaveChangesAsync();
             }
 
-
-            context.Products.Remove(product);
-            await context.SaveChangesAsync();
         }
 
         public async Task EditProductAsync(ProductFormViewModel model, int id)
         {
             Product? product = await context.Products.FindAsync(id);
 
-            if(product == null) 
+            if(product != null) 
             {
-                throw new Exception();
+                product.Name = model.Name;
+                product.Description = model.Description;
+                product.Price = model.Price;
+                product.CategoryId = model.CategoryId;
+                product.ImageUrl = model.ImageUrl;
+
+                await context.SaveChangesAsync();
             }
 
-            product.Name = model.Name;
-            product.Description = model.Description;
-            product.Price = model.Price;
-            product.CategoryId = model.CategoryId;
-            product.ImageUrl = model.ImageUrl;
-
-            await context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<ProductAllViewModel>> GetAllProductsAsync()
+        public async Task<IEnumerable<ProductServiceModel>> GetAllProductsAsync()
         {
             return await context.Products
                 .AsNoTracking()
-                .Select(p => new ProductAllViewModel()
+                .Select(p => new ProductServiceModel()
                 {
                     Id = p.Id,
                     Name = p.Name,
@@ -85,7 +77,7 @@ namespace MetamodulTradeApp.Core.Services
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<ProductAllViewModel>> GetMyProductsAsync(string userId)
+        public async Task<IEnumerable<ProductServiceModel>> GetMyProductsAsync(string userId)
         {
 
             throw new NotImplementedException();

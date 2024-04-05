@@ -12,9 +12,6 @@
 
         public string CreatedOn { get; set; } = string.Empty;
 
-        public int CategoryId { get; set; }
-
-        public ICollection<ProductCategoryViewModel> Categories { get; set; }
-          = new List<ProductCategoryViewModel>();
+        public string Category { get; set; } = string.Empty;    
     }
 }
