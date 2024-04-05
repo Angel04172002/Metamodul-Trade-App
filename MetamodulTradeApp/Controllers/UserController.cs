@@ -37,5 +37,10 @@ namespace MetamodulTradeApp.Controllers
         {
             return Ok(User.IsInRole(rolename));
         }
+
+
+        public string GetUserId()
+        {
+        }
     }
 }

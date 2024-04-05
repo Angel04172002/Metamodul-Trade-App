@@ -3,6 +3,7 @@ using MetamodulTradeApp.Core.Services.Contracts;
 using MetamodulTradeApp.Data;
 using MetamodulTradeApp.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace MetamodulTradeApp.Core.Services
 {
@@ -21,7 +22,7 @@ namespace MetamodulTradeApp.Core.Services
             {
                 Title = model.Title,
                 CreatedOn = DateTime.Now,
-                CreatorId = "",
+                CreatorId = model.CreatorId,
                 Description = model.Description,
                 ImageUrl = model.ImageUrl,
             };

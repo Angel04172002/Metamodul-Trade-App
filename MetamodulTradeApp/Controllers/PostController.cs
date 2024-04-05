@@ -4,6 +4,7 @@ using MetamodulTradeApp.Infrastructure.Data.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
+using System.Security.Claims;
 
 namespace MetamodulTradeApp.Controllers
 {
@@ -40,21 +41,25 @@ namespace MetamodulTradeApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(PostFormViewModel model)
         {
-            if(!DateTime.TryParseExact(
-                model.CreatedOn,
-                DataConstants.DateFormat,
-                CultureInfo.InvariantCulture,
-                DateTimeStyles.None,
-                out DateTime date
-                ))
-            {
-                ModelState.AddModelError(nameof(model.CreatedOn), "Invalid date format!");
-            }
+            //if(!DateTime.TryParseExact(
+            //    model.CreatedOn,
+            //    DataConstants.DateFormat,
+            //    CultureInfo.InvariantCulture,
+            //    DateTimeStyles.None,
+            //    out DateTime date
+            //    ))
+            //{
+            //    ModelState.AddModelError(nameof(model.CreatedOn), "Invalid date format!");
+            //}
 
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(model);
             }
+
+
+            model.CreatorId = User.Id();
+            model.CreatedOn = DateTime.Now.ToString();
 
             await postService.AddPostAsync(model);
 
