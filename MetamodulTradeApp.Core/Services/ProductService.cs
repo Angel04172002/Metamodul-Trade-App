@@ -96,7 +96,8 @@ namespace MetamodulTradeApp.Core.Services
                     CreatedOn = p.CreatedOn.ToString(),
                     Category = p.Category.Name,
                     Price = p.Price,
-                    Name = p.Name
+                    Name = p.Name,
+                    Creator = p.Creator.UserName,
                 });
 
 
@@ -131,7 +132,8 @@ namespace MetamodulTradeApp.Core.Services
                     CreatedOn = up.Product.CreatedOn.ToString(),
                     Category = up.Product.Category.Name,
                     Price = up.Product.Price,
-                    Name = up.Product.Name
+                    Name = up.Product.Name,
+                    Creator = up.Product.Creator.UserName,
                 });
 
             var filteredProducts = await GetAllFilteredProductsAsync("", currentPage, itemsPerPage, userProducts);
@@ -157,8 +159,9 @@ namespace MetamodulTradeApp.Core.Services
                     Name = p.Name,
                     Price = p.Price,
                     CreatedOn = p.CreatedOn.ToString(),
-                    Category = p.Category.Name
-              
+                    Category = p.Category.Name,
+                    Creator = p.Creator.UserName,
+
                 })
                 .FirstOrDefaultAsync();
         }

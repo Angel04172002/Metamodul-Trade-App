@@ -58,6 +58,9 @@ namespace MetamodulTradeApp.Controllers
                 return View(model);
             }
 
+
+            model.CreatorId = User.Id();
+
             await productService.AddProductAsync(model);
 
             return RedirectToAction(nameof(Index));

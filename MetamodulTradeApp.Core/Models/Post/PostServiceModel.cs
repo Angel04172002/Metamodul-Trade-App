@@ -9,5 +9,7 @@
         public string ImageUrl { get; set; } = string.Empty;
 
         public string CreatedOn { get; set; } = string.Empty;
+
+        public string Creator { get; set; } = string.Empty;
     }
 }

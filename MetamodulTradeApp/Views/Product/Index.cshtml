@@ -15,6 +15,19 @@
                 <div class="card-body">
                     <h5 class="card-title">@product.Name</h5>
                     <p class="card-text">@product.CreatedOn</p>
+
+
+                    @if (User?.Identity?.Name == product.Creator)
+                    {
+                        <div style="display: flex; align-items: center; justify-content: center; gap: 2em; margin-bottom: 1em;" class="changeButtons">
+
+                            <button style="padding: 0.9em; display: block;" class="edit-btn" asp-action="Edit" asp-route-id="@product.Id">Редактирай</button>
+                            <button style="padding: 0.9em; display: block;" class="delete-btn" asp-action="Remove" asp-route-id="@product.Id">Изтрий</button>
+
+                        </div>
+                    }
+
+
                     <button asp-action="Details" asp-route-id="@product.Id" id="open-submit" type="submit" class="w-100 btn open-btn btn-primary">Отвори</button>
                 </div>
             </div>

@@ -63,7 +63,8 @@ namespace MetamodulTradeApp.Core.Services
                     Id = p.Id,
                     ImageUrl = p.ImageUrl,
                     CreatedOn = p.CreatedOn.ToString(),
-                    Title = p.Title
+                    Title = p.Title,
+                    Creator = p.Creator.UserName
                 })
                 .ToListAsync();
 
@@ -88,6 +89,7 @@ namespace MetamodulTradeApp.Core.Services
                     ImageUrl = p.ImageUrl,
                     CreatedOn = p.CreatedOn.ToString(),
                     Title = p.Title,
+                    Creator = p.Creator.UserName,
                     Comments = p.Comments.Select(c => new Models.Comment.CommentAllViewModel()
                     {
                         Id = c.Id,
@@ -102,16 +104,18 @@ namespace MetamodulTradeApp.Core.Services
                 
         }
 
-        public async Task<PostServiceModel?> GetPostByIdAsync(int id)
+        public async Task<PostDetailsViewModel?> GetPostByIdAsync(int id)
         {
             return await context.Posts
                 .Where(p => p.Id == id)
-                .Select(p => new PostServiceModel()
+                .Select(p => new PostDetailsViewModel()
                 {
                     Id = p.Id,
                     ImageUrl = p.ImageUrl,
                     CreatedOn = p.CreatedOn.ToString(),
-                    Title = p.Title
+                    Title = p.Title,
+                    Description = p.Description,
+                    Creator = p.Creator.UserName,
                 })
                 .FirstOrDefaultAsync();
         }

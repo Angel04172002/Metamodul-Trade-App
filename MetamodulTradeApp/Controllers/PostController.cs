@@ -70,15 +70,42 @@ namespace MetamodulTradeApp.Controllers
         [HttpGet]   
         public async Task<IActionResult> Edit(int id)
         {
-            //var post = await postService.Get
+            var post = await postService.GetPostByIdAsync(id);
 
-            return View();
+            if(post == null)
+            {
+                return BadRequest();
+            }
+
+            PostFormViewModel model = new PostFormViewModel()
+            {
+                ImageUrl = post.ImageUrl,
+                Description = post.Description,
+                CreatedOn = post.CreatedOn,
+                Title = post.Title
+            };
+
+            return View(model);
         }
 
 
         [HttpPost]
         public async Task<IActionResult> Edit(PostFormViewModel model, int id)
         {
+            var post = await postService.GetPostByIdAsync(id);
+
+            if (post == null)
+            {
+                return BadRequest();
+            }
+
+            if(ModelState.IsValid == false)
+            {
+                return View(model);
+            }
+
+            await postService.EditPostAsync(model, id);
+
             return RedirectToAction(nameof(Index));
         }
 
