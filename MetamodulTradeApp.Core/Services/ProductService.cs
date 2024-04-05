@@ -85,14 +85,19 @@ namespace MetamodulTradeApp.Core.Services
                 .ToListAsync();
         }
 
-        public Task<IEnumerable<ProductAllViewModel>> GetMyProductsAsync(string userId)
+        public async Task<IEnumerable<ProductAllViewModel>> GetMyProductsAsync(string userId)
         {
+
             throw new NotImplementedException();
         }
 
-        public Task LikeProductAsync()
+        public async Task LikeProductAsync()
         {
-            throw new NotImplementedException();
+            //context.UsersProducts.Add(new UserProduct()
+            //{
+            //    UserId = userId,
+            //    ProductId = 
+            //});
         }
 
         public Task UnlikeProductAsync()

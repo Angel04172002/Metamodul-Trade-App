@@ -1,33 +1,91 @@
 ﻿using MetamodulTradeApp.Core.Models.ClientRequest;
 using MetamodulTradeApp.Core.Services.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MetamodulTradeApp.Data;
+using MetamodulTradeApp.Infrastructure.Data.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace MetamodulTradeApp.Core.Services
 {
     public class ClientRequestService : IClientRequestService
     {
-        public Task AddRequestAsync(ClientRequestFormViewModel model)
+        private readonly ApplicationDbContext context;
+
+        public ClientRequestService(ApplicationDbContext _context)
         {
-            throw new NotImplementedException();
+            context = _context;
         }
 
-        public Task<IEnumerable<ClientRequestAllViewModel>> GetAllRequestsAsync()
+        public async Task AddRequestAsync(ClientRequestFormViewModel model)
         {
-            throw new NotImplementedException();
+            ClientRequest clientRequest = new ClientRequest()
+            {
+                Message = model.Message,
+                PhoneNumber = model.PhoneNumber,
+                Topic = model.Topic,
+                CreatedOn = DateTime.Now,
+                CreatorId = model.CreatorId,
+            };
+
+            await context.ClientRequests.AddAsync(clientRequest);
+            await context.SaveChangesAsync();
+            
         }
 
-        public Task<IEnumerable<ClientRequestAllViewModel>> GetMyRequestsAsync()
+        public async Task EditRequestAsync(ClientRequestFormViewModel model, int id)
         {
-            throw new NotImplementedException();
+            var clientRequest = await context.ClientRequests.FindAsync(id);
+
+            if(clientRequest != null)
+            {
+                clientRequest.Message = model.Message; 
+                clientRequest.Topic = model.Topic;
+                clientRequest.PhoneNumber = model.PhoneNumber;
+
+                await context.SaveChangesAsync();
+            } 
         }
 
-        public Task RemoveRequestAsync(int id)
+        public async Task<IEnumerable<ClientRequestAllViewModel>> GetAllRequestsAsync()
         {
-            throw new NotImplementedException();
+            return await context.ClientRequests
+                .AsNoTracking()
+                .Select(c => new ClientRequestAllViewModel()
+                {
+                    Id = c.Id,
+                    Message = c.Message,
+                    Topic = c.Topic,
+                    CreatedOn = c.CreatedOn.ToString(),
+                    CreatorId = c.CreatorId
+                })
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<ClientRequestAllViewModel>> GetMyRequestsAsync(string userId)
+        {
+            return await context.ClientRequests
+                .AsNoTracking()
+                .Where(c => c.CreatorId == userId)
+                .Select(c => new ClientRequestAllViewModel()
+                {
+                    Id = c.Id,
+                    Message = c.Message,
+                    Topic = c.Topic,
+                    CreatedOn = c.CreatedOn.ToString(),
+                    CreatorId = c.CreatorId
+                })
+                .OrderByDescending(c => DateTime.Parse(c.CreatedOn))
+                .ToListAsync();
+        }
+
+        public async Task RemoveRequestAsync(int id)
+        {
+            var clientRequest = await context.ClientRequests.FindAsync(id);
+
+            if(clientRequest != null)
+            {
+                context.ClientRequests.Remove(clientRequest);
+                await context.SaveChangesAsync();
+            }
         }
     }
 }

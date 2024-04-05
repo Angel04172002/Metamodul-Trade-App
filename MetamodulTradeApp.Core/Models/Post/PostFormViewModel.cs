@@ -11,7 +11,7 @@ namespace MetamodulTradeApp.Core.Models.Post
             PostTitleMaxLength,
             MinimumLength = PostTitleMinLength,
             ErrorMessage = StringLengthErrorMessage)]
-        public string Title { get; set; } = null!;
+        public string Title { get; set; } = string.Empty;
 
 
         [Required(ErrorMessage = RequireErrorMessage)]
@@ -20,13 +20,14 @@ namespace MetamodulTradeApp.Core.Models.Post
             MinimumLength = PostDescriptionMinLength,
             ErrorMessage = StringLengthErrorMessage
             )]
-        public string Description { get; set; } = null!;
+        public string Description { get; set; } = string.Empty;
 
         [Required(ErrorMessage = RequireErrorMessage)]
-        public string ImageUrl { get; set; } = null!;
+        public string ImageUrl { get; set; } = string.Empty;
 
-        public string CreatedOn { get; set; } = null!;
 
-        public string CreatorId { get; set; } = null!;
+        public string? CreatedOn { get; set; } 
+
+        public string? CreatorId { get; set; }
     }
 }

@@ -52,14 +52,19 @@ namespace MetamodulTradeApp.Controllers
             //    ModelState.AddModelError(nameof(model.CreatedOn), "Invalid date format!");
             //}
 
+            model.CreatorId = User.Id();
+            model.CreatedOn = DateTime.Now.ToString();
+
+
+
+
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
 
-            model.CreatorId = User.Id();
-            model.CreatedOn = DateTime.Now.ToString();
+
 
             await postService.AddPostAsync(model);
 

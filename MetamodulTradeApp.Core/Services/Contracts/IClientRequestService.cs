@@ -12,8 +12,10 @@ namespace MetamodulTradeApp.Core.Services.Contracts
         Task<IEnumerable<ClientRequestAllViewModel>> GetAllRequestsAsync();
         Task AddRequestAsync(ClientRequestFormViewModel model);
 
+        Task EditRequestAsync(ClientRequestFormViewModel model ,int id);
+
         Task RemoveRequestAsync(int id);
 
-        Task<IEnumerable<ClientRequestAllViewModel>> GetMyRequestsAsync();
+        Task<IEnumerable<ClientRequestAllViewModel>> GetMyRequestsAsync(string userId);
     }
 }

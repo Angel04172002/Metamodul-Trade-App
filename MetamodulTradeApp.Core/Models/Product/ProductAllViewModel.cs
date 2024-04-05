@@ -2,21 +2,13 @@
 {
     public class ProductAllViewModel
     {
+        public const int ProductsPerPage = 6;
 
-        public int Id { get; set; }
+        public int CurrentPage { get; set; } = 1;
 
-        public string Name { get; set; } = string.Empty;
+        public int TotalProductsCount { get; set; }
 
-
-        public decimal Price { get; set; }
-
-   
-        public string ImageUrl { get; set; } = string.Empty;
-
-        public string CreatedOn { get; set; } = null!;
-
-        public int CategoryId { get; set; }
-
-
+        public IEnumerable<ProductServiceModel> Products { get; set; }
+            = new List<ProductServiceModel>();
     }
 }

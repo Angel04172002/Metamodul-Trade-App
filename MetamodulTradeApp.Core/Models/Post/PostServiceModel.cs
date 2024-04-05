@@ -12,6 +12,6 @@
 
         public int TotalPostsCount { get; set; }
 
-        public string CreatedOn { get; set; } = null!;
+        public string CreatedOn { get; set; } = string.Empty;
     }
 }
