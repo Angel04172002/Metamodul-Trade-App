@@ -1,4 +1,5 @@
-﻿using MetamodulTradeApp.Core.Models.Product;
+﻿using MetamodulTradeApp.Core.Models.Post;
+using MetamodulTradeApp.Core.Models.Product;
 using MetamodulTradeApp.Core.Services.Contracts;
 using MetamodulTradeApp.Data;
 using MetamodulTradeApp.Infrastructure.Data.Models;
@@ -32,6 +33,24 @@ namespace MetamodulTradeApp.Core.Services
             await context.SaveChangesAsync();
         }
 
+        public async Task<IEnumerable<ProductCategoryViewModel>> AllCategoriesAsync()
+        {
+            return await context.ProductCategories
+                .AsNoTracking()
+                .Select(pc => new ProductCategoryViewModel()
+                {
+                    Id = pc.Id,
+                    Name = pc.Name
+                })
+                .ToListAsync();
+        }
+
+        public async Task<bool> CategoryExistsAsync(int id)
+        {
+            return await context.ProductCategories
+                .AnyAsync(pc =>  pc.Id == id);
+        }
+
         public async Task DeleteProductAsync(int id)
         {
             Product? product = await context.Products.FindAsync(id);
@@ -61,26 +80,62 @@ namespace MetamodulTradeApp.Core.Services
 
         }
 
-        public async Task<IEnumerable<ProductServiceModel>> GetAllProductsAsync()
+        public async Task<ProductAllViewModel> GetAllProductsAsync(
+            string searchTerm = "",
+            int itemsPerPage = 0,
+            int currentPage = 0
+            )
         {
-            return await context.Products
-                .AsNoTracking()
-                .Select(p => new ProductServiceModel()
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    ImageUrl = p.ImageUrl,
-                    Price = p.Price,
-                    CategoryId = p.CategoryId,
-                    CreatedOn = p.CreatedOn.ToString()
-                })
-                .ToListAsync();
+
+            var products = await context.Products
+               .AsNoTracking()
+               .Skip((currentPage - 1) * itemsPerPage)
+               .Take(itemsPerPage)
+               .Select(p => new ProductServiceModel()
+               {
+                   Id = p.Id,
+                   ImageUrl = p.ImageUrl,
+                   CreatedOn = p.CreatedOn.ToString(),
+                   Category = p.Category.Name,
+                   Price = p.Price,
+                   Name = p.Name
+               })
+               .ToListAsync();
+
+
+            return new ProductAllViewModel()
+            {
+                Products = products,
+                CurrentPage = currentPage,
+                TotalProductsCount = products.Count()
+            };
+
+
+
         }
 
-        public async Task<IEnumerable<ProductServiceModel>> GetMyProductsAsync(string userId)
+        public async Task<ProductAllViewModel> GetMyProductsAsync(string userId)
         {
 
             throw new NotImplementedException();
+        }
+
+        public async Task<ProductFormViewModel?> GetProductByIdAsync(int id)
+        {
+            return await context.Products
+                .AsNoTracking()
+                .Where(p => p.Id == id)
+                .Select(p => new ProductFormViewModel()
+                {
+                    Description = p.Description,
+                    ImageUrl = p.ImageUrl,
+                    Name = p.Name,
+                    Price = p.Price,
+                    CategoryId = p.CategoryId,
+                    CreatedOn = p.CreatedOn.ToString(),
+                    CreatorId = p.CreatorId
+                })
+                .FirstOrDefaultAsync();
         }
 
         public async Task LikeProductAsync()

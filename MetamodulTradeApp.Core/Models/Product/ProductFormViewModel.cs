@@ -41,7 +41,7 @@ namespace MetamodulTradeApp.Core.Models.Product
         [Required(ErrorMessage = RequireErrorMessage)]
         public int CategoryId { get; set; }
 
-        public IList<ProductCategoryViewModel> Categories { get; set; }
+        public IEnumerable<ProductCategoryViewModel> Categories { get; set; }
             = new List<ProductCategoryViewModel>(); 
 
     }

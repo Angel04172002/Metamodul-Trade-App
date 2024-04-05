@@ -9,8 +9,14 @@ namespace MetamodulTradeApp.Core.Services.Contracts
 {
     public interface IProductService
     {
-        Task<IEnumerable<ProductServiceModel>> GetAllProductsAsync();
-        Task<IEnumerable<ProductServiceModel>> GetMyProductsAsync(string userId);
+        Task<ProductAllViewModel> GetAllProductsAsync(
+            string searchTerm = "",
+            int itemsPerPage = 0,
+            int currentPage = 0);
+
+        Task<ProductAllViewModel> GetMyProductsAsync(string userId);
+
+        Task<ProductFormViewModel?> GetProductByIdAsync(int id);
 
         Task LikeProductAsync();
 
@@ -20,5 +26,8 @@ namespace MetamodulTradeApp.Core.Services.Contracts
         Task EditProductAsync(ProductFormViewModel model, int id);
         Task DeleteProductAsync(int id);
 
+        Task<IEnumerable<ProductCategoryViewModel>> AllCategoriesAsync();
+
+        Task<bool> CategoryExistsAsync(int id);
     }
 }

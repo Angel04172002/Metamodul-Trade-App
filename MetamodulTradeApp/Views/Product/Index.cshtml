@@ -36,11 +36,11 @@
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
         <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : string.Empty)">
-            <a class="page-link" asp-controller="Product" asp-action="Index" asp-route-currentPage="@previousPage" tabindex="-1">Previous</a>
+            <a class="page-link" asp-controller="Product" asp-action="Index" asp-route-currentPage="@previousPage" tabindex="-1">Предишна</a>
         </li>
 
         <li class="page-item">
-            <a class="page-link" asp-controller="Product" asp-action="Index" asp-route-currentPage="@(Model.CurrentPage + 1)" tabindex="-1">Next</a>
+            <a class="page-link" asp-controller="Product" asp-action="Index" asp-route-currentPage="@(Model.CurrentPage + 1)" tabindex="-1">Следваща</a>
         </li>
     </ul>
 </nav>
@@ -50,7 +50,7 @@
 
 @if (!Model.Products.Any())
 {
-    <h2 class="text-center">No posts found by the given criteria!</h2>
+    <h2 class="text-center">Няма намерени продукти!</h2>
 }
 
 

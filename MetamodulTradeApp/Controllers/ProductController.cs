@@ -1,4 +1,5 @@
 ﻿using MetamodulTradeApp.Core.Models.Product;
+using MetamodulTradeApp.Core.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,11 +8,23 @@ namespace MetamodulTradeApp.Controllers
     [Authorize]
     public class ProductController : Controller
     {
-        [HttpGet]
-        public async Task<IActionResult> Index()
+        private readonly IProductService productService;
+
+        public ProductController(IProductService _productService)
         {
-            return View();
+            productService = _productService;
         }
+
+
+        [HttpGet]
+        public async Task<IActionResult> Index([FromQuery] ProductAllViewModel model)
+        {
+            var products = await productService.GetAllProductsAsync("", ProductAllViewModel.ProductsPerPage, model.CurrentPage);
+
+
+            return View(products);
+        }
+
 
         [HttpGet]
         [AllowAnonymous]
@@ -24,25 +37,67 @@ namespace MetamodulTradeApp.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Add()
         {
-            return View();
+            var model = new ProductFormViewModel();
+            model.Categories = await productService.AllCategoriesAsync();
+
+            return View(model);
         }
 
         [HttpPost]
         public async Task<IActionResult> Add(ProductFormViewModel model)
         {
-            return View();
+            if(await productService.CategoryExistsAsync(model.CategoryId) == false)
+            {
+                ModelState.AddModelError(nameof(model.CategoryId), "Category does not exist!");
+            }
+
+            if(ModelState.IsValid == false)
+            {
+                model.Categories = await productService.AllCategoriesAsync();
+                return View(model);
+            }
+
+            await productService.AddProductAsync(model);
+
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            return View();
+            var product = await productService.GetProductByIdAsync(id);
+
+            if(product == null)
+            {
+                return BadRequest();
+            }
+
+
+            return View(product);
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(int id, ProductFormViewModel model)
         {
-            return View();
+            var product = await productService.GetProductByIdAsync(id);
+
+            if (product == null)
+            {
+                return BadRequest();
+            }
+
+
+            if(ModelState.IsValid == false)
+            {
+                model.Categories = await productService.AllCategoriesAsync();
+                return View(model);
+            }
+
+
+            await productService.EditProductAsync(model, id);
+
+
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
