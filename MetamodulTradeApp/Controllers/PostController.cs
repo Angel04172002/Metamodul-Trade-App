@@ -55,15 +55,10 @@ namespace MetamodulTradeApp.Controllers
             model.CreatorId = User.Id();
             model.CreatedOn = DateTime.Now.ToString();
 
-
-
-
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
-
-
 
 
             await postService.AddPostAsync(model);

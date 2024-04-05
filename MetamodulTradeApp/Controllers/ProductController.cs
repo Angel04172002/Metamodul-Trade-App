@@ -2,6 +2,7 @@
 using MetamodulTradeApp.Core.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace MetamodulTradeApp.Controllers
 {
@@ -72,8 +73,19 @@ namespace MetamodulTradeApp.Controllers
                 return BadRequest();
             }
 
+            var categoryId = await productService.GetProductCategoryIdAsync(id);
 
-            return View(product);
+            var model = new ProductFormViewModel()
+            {
+                ImageUrl = product.ImageUrl,
+                CategoryId = categoryId,
+                CreatedOn = product.CreatedOn,
+                Description = product.Description,
+                Name = product.Name,
+                Price = product.Price,
+            };
+
+            return View(model);
         }
 
         [HttpPost]
@@ -113,16 +125,25 @@ namespace MetamodulTradeApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Mine()
+        public async Task<IActionResult> Mine([FromQuery] ProductAllViewModel model)
         {
-            return View();
+            var userId = User.Id();
+            var products = await productService.GetMyProductsAsync(userId);
+
+            return View(products);
         }
 
+
         [HttpPost]
-        public async Task<IActionResult> Like()
+        public async Task<IActionResult> Like(int id)
         {
-            return View();
+            var userId = User.Id();
+
+            await productService.LikeProductAsync(userId, id);
+
+            return RedirectToAction(nameof(Mine));
         }
+
 
         [HttpPost]
         public async Task<IActionResult> Unlike()

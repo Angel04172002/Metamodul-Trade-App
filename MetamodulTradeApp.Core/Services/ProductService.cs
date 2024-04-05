@@ -87,25 +87,25 @@ namespace MetamodulTradeApp.Core.Services
             )
         {
 
-            var products = await context.Products
-               .AsNoTracking()
-               .Skip((currentPage - 1) * itemsPerPage)
-               .Take(itemsPerPage)
-               .Select(p => new ProductServiceModel()
-               {
-                   Id = p.Id,
-                   ImageUrl = p.ImageUrl,
-                   CreatedOn = p.CreatedOn.ToString(),
-                   Category = p.Category.Name,
-                   Price = p.Price,
-                   Name = p.Name
-               })
-               .ToListAsync();
+            var products = context.Products
+                .AsNoTracking()
+                .Select(p => new ProductServiceModel()
+                {
+                    Id = p.Id,
+                    ImageUrl = p.ImageUrl,
+                    CreatedOn = p.CreatedOn.ToString(),
+                    Category = p.Category.Name,
+                    Price = p.Price,
+                    Name = p.Name
+                });
+
+
+            var filteredProducts = await GetAllFilteredProductsAsync("", currentPage, itemsPerPage, products);
 
 
             return new ProductAllViewModel()
             {
-                Products = products,
+                Products = filteredProducts,
                 CurrentPage = currentPage,
                 TotalProductsCount = products.Count()
             };
@@ -114,42 +114,100 @@ namespace MetamodulTradeApp.Core.Services
 
         }
 
-        public async Task<ProductAllViewModel> GetMyProductsAsync(string userId)
+        public async Task<ProductAllViewModel> GetMyProductsAsync(
+            string? userId, 
+            string searchTerm = "", 
+            int itemsPerPage = 0, 
+            int currentPage = 0)
         {
 
-            throw new NotImplementedException();
+
+            var userProducts = context.UsersProducts
+                .Where(up => up.UserId == userId)
+                .Select(up => new ProductServiceModel()
+                {
+                    Id = up.ProductId,
+                    ImageUrl = up.Product.ImageUrl,
+                    CreatedOn = up.Product.CreatedOn.ToString(),
+                    Category = up.Product.Category.Name,
+                    Price = up.Product.Price,
+                    Name = up.Product.Name
+                });
+
+            var filteredProducts = await GetAllFilteredProductsAsync("", currentPage, itemsPerPage, userProducts);
+
+            return new ProductAllViewModel()
+            {
+                Products = filteredProducts,
+                CurrentPage = currentPage,
+                TotalProductsCount = userProducts.Count()
+            };
         }
 
-        public async Task<ProductFormViewModel?> GetProductByIdAsync(int id)
+        public async Task<ProductDetailsViewModel?> GetProductByIdAsync(int id)
         {
             return await context.Products
                 .AsNoTracking()
                 .Where(p => p.Id == id)
-                .Select(p => new ProductFormViewModel()
+                .Select(p => new ProductDetailsViewModel()
                 {
+                    Id = p.Id,
                     Description = p.Description,
                     ImageUrl = p.ImageUrl,
                     Name = p.Name,
                     Price = p.Price,
-                    CategoryId = p.CategoryId,
                     CreatedOn = p.CreatedOn.ToString(),
-                    CreatorId = p.CreatorId
+                    Category = p.Category.Name
+              
                 })
                 .FirstOrDefaultAsync();
         }
 
-        public async Task LikeProductAsync()
+        public async Task<int> GetProductCategoryIdAsync(int id)
         {
-            //context.UsersProducts.Add(new UserProduct()
-            //{
-            //    UserId = userId,
-            //    ProductId = 
-            //});
+            return await context.Products
+                .Where(p => p.Id == id)
+                .Select(p => p.Category.Id)
+                .FirstOrDefaultAsync();     
+        }
+
+        public async Task LikeProductAsync(string? userId, int productId)
+        {
+            var userProduct = await context.UsersProducts
+                .FirstOrDefaultAsync(up => up.UserId == userId && up.ProductId == productId);
+
+            if (userProduct == null)
+            {
+                context.UsersProducts.Add(new UserProduct()
+                {
+                    UserId = userId,
+                    ProductId = productId
+                });
+
+                await context.SaveChangesAsync();
+            }
+
         }
 
         public Task UnlikeProductAsync()
         {
             throw new NotImplementedException();
+        }
+
+
+        private async Task<List<ProductServiceModel>> GetAllFilteredProductsAsync(
+            string searchTerm, 
+            int currentPage, 
+            int itemsPerPage,
+            IQueryable<ProductServiceModel> products)
+        {
+            var filteredProducts = await products
+              .Skip((currentPage - 1) * itemsPerPage)
+              .Take(itemsPerPage)
+              .ToListAsync();
+              
+
+            return filteredProducts;
         }
     }
 }

@@ -14,11 +14,15 @@ namespace MetamodulTradeApp.Core.Services.Contracts
             int itemsPerPage = 0,
             int currentPage = 0);
 
-        Task<ProductAllViewModel> GetMyProductsAsync(string userId);
+        Task<ProductAllViewModel> GetMyProductsAsync(
+            string? userId,
+            string searchTerm = "",
+            int itemsPerPage = 0,
+            int currentPage = 0);
 
-        Task<ProductFormViewModel?> GetProductByIdAsync(int id);
+        Task<ProductDetailsViewModel?> GetProductByIdAsync(int id);
 
-        Task LikeProductAsync();
+        Task LikeProductAsync(string? userId, int productId);
 
         Task UnlikeProductAsync();
 
@@ -27,6 +31,8 @@ namespace MetamodulTradeApp.Core.Services.Contracts
         Task DeleteProductAsync(int id);
 
         Task<IEnumerable<ProductCategoryViewModel>> AllCategoriesAsync();
+
+        Task<int> GetProductCategoryIdAsync(int id);
 
         Task<bool> CategoryExistsAsync(int id);
     }
