@@ -40,7 +40,6 @@ namespace MetamodulTradeApp.Core.Services
                 post.Title = model.Title;
                 post.Description = model.Description;
                 post.ImageUrl = model.ImageUrl;
-                post.CreatedOn = DateTime.Parse(model.CreatedOn);
 
                 await context.SaveChangesAsync();
             }

@@ -1,18 +1,11 @@
 ﻿@model PostFormViewModel
 
 
-@{
-    ViewData["Title"] = "Пост";
-}
-
 
 <div class="form-container text-center">
 
 
-    <h1 class="main-heading text-center">Добави пост</h1>
-
-
-    <form method="post" asp-controller="Post" asp-action="Add" class="edit-form">
+    <form method="post" class="edit-form">
 
 
         <div class="row mb-3">
@@ -50,7 +43,7 @@
         </div>
 
         <div class="col-10">
-            <input id="submit-btn" type="submit" class="w-100 btn btn-primary" value="Добави" />
+            <input id="submit-btn" type="submit" class="w-100 btn btn-primary" value="Запази" />
         </div>
     </form>
 

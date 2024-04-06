@@ -1,26 +1,41 @@
-﻿
+﻿@model PostDetailsViewModel
+
 @{
-    ViewData["Title"] = "Детайли";
+    ViewBag.Title = "Детайли за публикация";
 }
 
 
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
 
-<div class="card" >
-    <div class="row g-0">
-        <div class="col-md-5">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAAAJH2rx303IXOHxcp3Xrxd8R8Fsok21tKQ&usqp=CAU" class="img-fluid rounded-start" alt="...">
+
+<div class="container" style="display:inline">
+    <div class="row">
+
+        <div class="col-5">
+            <img class="card-img-top" style="width: 20vw; height: 60vh"
+                 src="@Model.ImageUrl" alt="Post Image">
         </div>
-        <div class="card-body col-md-7">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text card-desc">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                <p class="card-text card-foot"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+
+        <div class="card col-7 border-0">
+            <p style="font-size:25px;"><u>@Model.Title</u></p>
+            <p>@Model.Description</p>
+
+            <div class="form-inline">
+
+                @if (this?.User?.Identity?.Name == Model.Creator)
+                {
+                    <a class="btn btn-warning" asp-controller="Post" asp-action="Edit" asp-route-id="@Model.Id">Редактирай</a>
+                    <a class="ml-2 btn btn-danger" asp-controller="Post" asp-action="Remove" asp-route-id="@Model.Id">Изтрий</a>
+            
+                }
+
+            </div>
+
+            <p>@Model.CreatedOn</p>
+    
         </div>
     </div>
 </div>
 
 
-
-@section Styles {
-    <link rel="stylesheet" href="~/css/layout.css" />
-    <link rel="stylesheet" href="~/css/post-details.css" />
-}
