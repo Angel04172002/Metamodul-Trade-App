@@ -4,7 +4,7 @@
 }
 
 
-.card {
+/*.card {
     width: 100vw;
     margin-left: 0;
     transform: translateX(-18%);
@@ -26,10 +26,10 @@
     text-align: center;
 }
 
-.card-body {
+.card-body {*/
     /*  min-height: 50%;*/
     /*  font-size: 1.45em;*/
-    padding: 30em;
+    /*padding: 30em;
     padding-bottom: 1em;
     padding-top: 3em;
 }
@@ -38,5 +38,12 @@
     font-size: 1.1em;
     font-style: italic;
     text-align: center;
-}
+}*/
 
+
+
+.content-div {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}

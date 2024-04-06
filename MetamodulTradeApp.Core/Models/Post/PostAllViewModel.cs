@@ -10,6 +10,8 @@ namespace MetamodulTradeApp.Core.Models.Post
 
         public int TotalPostsCount { get; set; }
 
+        public string SearchTerm { get; set; } = null!;
+
         public IEnumerable<PostServiceModel> Posts { get; set; }
           = new List<PostServiceModel>();   
     }

@@ -44,3 +44,12 @@
     .card-body button:hover {
         background-color: darkorange;
     }
+
+    .search-form {
+        margin-top: 3.5em;
+        margin-bottom: 5em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+

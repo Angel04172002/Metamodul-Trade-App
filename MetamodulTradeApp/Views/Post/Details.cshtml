@@ -13,12 +13,12 @@
     <div class="row">
 
         <div class="col-5">
-            <img class="card-img-top" style="width: 20vw; height: 60vh"
+            <img class="card-img-top" style="width: 25vw; height: 60vh"
                  src="@Model.ImageUrl" alt="Post Image">
         </div>
 
-        <div class="card col-7 border-0">
-            <p style="font-size:25px;"><u>@Model.Title</u></p>
+        <div class="content-div card col-7 border-0">
+            <h2>@Model.Title</h2>
             <p>@Model.Description</p>
 
             <div class="form-inline">
@@ -39,3 +39,7 @@
 </div>
 
 
+
+@section Styles {
+    <link rel="stylesheet" href="~/css//post-details.css" />
+}
