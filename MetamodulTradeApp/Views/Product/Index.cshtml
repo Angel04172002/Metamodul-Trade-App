@@ -5,7 +5,29 @@
     ViewData["Title"] = "Продукти";
 }
 
+<form class="search-form d-flex" style="align-items: center; justify-content: center;" role="search">
+
+    <div class="form-group col-md-3">
+        <label asp-for="SearchTerm"></label>
+        <input asp-for=SearchTerm class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+    </div>
+
+    <div class="col-md-3">
+
+        <div class="form-group mt-4 p-2">
+
+            <input value="Търси" class="btn btn-outline-success" type="submit"></input>
+
+        </div>
+
+    </div>
+</form>
+
 <div class="row row-cols-1 row-cols-md-3 g-4">
+
+
+
+
 
     @foreach (var product in Model.Products)
     {
@@ -21,8 +43,8 @@
                     {
                         <div style="display: flex; align-items: center; justify-content: center; gap: 2em; margin-bottom: 1em;" class="changeButtons">
 
-                            <button style="padding: 0.9em; display: block;" class="edit-btn" asp-action="Edit" asp-route-id="@product.Id">Редактирай</button>
-                            <button style="padding: 0.9em; display: block;" class="delete-btn" asp-action="Remove" asp-route-id="@product.Id">Изтрий</button>
+                            <a style="padding: 0.9em; display: block;" class="edit-btn" asp-action="Edit" asp-route-id="@product.Id" >Редактирай</a>
+                            <a style="padding: 0.9em; display: block;" class="delete-btn" asp-action="Remove" asp-route-id="@product.Id">Изтрий</a>
 
                         </div>
                     }
@@ -49,11 +71,11 @@
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
         <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : string.Empty)">
-            <a class="page-link" asp-controller="Product" asp-action="Index" asp-route-currentPage="@previousPage" tabindex="-1">Предишна</a>
+            <a class="page-link" asp-controller="Product" asp-action="Index" asp-route-currentPage="@previousPage" tabindex="-1" asp-route-searchTerm="@Model.SearchTerm" tabindex="-1">Предишна</a>
         </li>
 
         <li class="page-item">
-            <a class="page-link" asp-controller="Product" asp-action="Index" asp-route-currentPage="@(Model.CurrentPage + 1)" tabindex="-1">Следваща</a>
+            <a class="page-link" asp-controller="Product" asp-action="Index" asp-route-currentPage="@(Model.CurrentPage + 1)" asp-route-searchTerm="@Model.SearchTerm" tabindex="-1">Следваща</a>
         </li>
     </ul>
 </nav>

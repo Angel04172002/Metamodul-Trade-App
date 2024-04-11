@@ -101,12 +101,12 @@ namespace MetamodulTradeApp.Core.Services
                 });
 
 
-            var filteredProducts = await GetAllFilteredProductsAsync("", currentPage, itemsPerPage, products);
+            var filteredProducts = await GetAllFilteredProductsAsync(searchTerm, currentPage, itemsPerPage, products);
 
 
             return new ProductAllViewModel()
             {
-                Products = filteredProducts,
+                Products = filteredProducts == null ? products : filteredProducts,
                 CurrentPage = currentPage,
                 TotalProductsCount = products.Count()
             };
@@ -198,17 +198,27 @@ namespace MetamodulTradeApp.Core.Services
         }
 
 
-        private async Task<List<ProductServiceModel>> GetAllFilteredProductsAsync(
-            string searchTerm, 
+        private async Task<List<ProductServiceModel>?> GetAllFilteredProductsAsync(
+            string? searchTerm, 
             int currentPage, 
             int itemsPerPage,
             IQueryable<ProductServiceModel> products)
         {
-            var filteredProducts = await products
-              .Skip((currentPage - 1) * itemsPerPage)
-              .Take(itemsPerPage)
-              .ToListAsync();
-              
+            var normalisedSearchTerm = searchTerm?.ToLower();
+            List<ProductServiceModel>? filteredProducts = null;
+
+            if (normalisedSearchTerm != null)
+            {
+
+                filteredProducts = await products
+                      .Where(p => p.Name.ToLower().Contains(normalisedSearchTerm) ||
+                                  p.Category.ToLower().Contains(normalisedSearchTerm))
+                      .Skip((currentPage - 1) * itemsPerPage)
+                      .Take(itemsPerPage)
+                      .ToListAsync();
+            }
+
+  
 
             return filteredProducts;
         }

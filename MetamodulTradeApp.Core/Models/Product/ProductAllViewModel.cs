@@ -8,6 +8,8 @@
 
         public int TotalProductsCount { get; set; }
 
+        public string SearchTerm { get; set; } = null!;
+
         public IEnumerable<ProductServiceModel> Products { get; set; }
             = new List<ProductServiceModel>();
     }

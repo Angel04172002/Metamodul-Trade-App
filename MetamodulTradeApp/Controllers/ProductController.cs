@@ -20,7 +20,10 @@ namespace MetamodulTradeApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Index([FromQuery] ProductAllViewModel model)
         {
-            var products = await productService.GetAllProductsAsync("", ProductAllViewModel.ProductsPerPage, model.CurrentPage);
+            var products = await productService.GetAllProductsAsync(
+                model.SearchTerm, 
+                ProductAllViewModel.ProductsPerPage,
+                model.CurrentPage);
 
 
             return View(products);

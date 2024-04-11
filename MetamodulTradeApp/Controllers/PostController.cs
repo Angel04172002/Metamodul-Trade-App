@@ -24,7 +24,10 @@ namespace MetamodulTradeApp.Controllers
         {
             //TODO: Implement searching by keyword
             
-            var posts = await postService.GetAllPostsAsync("", PostAllViewModel.PostsPerPage, model.CurrentPage);
+            var posts = await postService.GetAllPostsAsync(
+                model.SearchTerm
+                ,PostAllViewModel.PostsPerPage, 
+                model.CurrentPage);
 
             return View(posts);
         }

@@ -1,4 +1,5 @@
 ﻿using MetamodulTradeApp.Core.Models.Post;
+using MetamodulTradeApp.Core.Models.Product;
 using MetamodulTradeApp.Core.Services.Contracts;
 using MetamodulTradeApp.Data;
 using MetamodulTradeApp.Infrastructure.Data.Models;
@@ -53,10 +54,8 @@ namespace MetamodulTradeApp.Core.Services
             )
         {
 
-            var posts = await context.Posts
+            var posts = context.Posts
                 .AsNoTracking()
-                .Skip((currentPage - 1) * itemsPerPage)
-                .Take(itemsPerPage)
                 .Select(p => new PostServiceModel()
                 {
                     Id = p.Id,
@@ -64,13 +63,14 @@ namespace MetamodulTradeApp.Core.Services
                     CreatedOn = p.CreatedOn.ToString(),
                     Title = p.Title,
                     Creator = p.Creator.UserName
-                })
-                .ToListAsync();
+                });
+
+            var filteredPosts = await GetAllFilteredPostsAsync(searchTerm, currentPage, itemsPerPage, posts);
 
 
             return new PostAllViewModel()
             {
-                Posts = posts,
+                Posts = filteredPosts == null ? posts : filteredPosts,
                 CurrentPage = currentPage,
                 TotalPostsCount = posts.Count()
             };
@@ -131,6 +131,28 @@ namespace MetamodulTradeApp.Core.Services
     
         }
 
-   
+
+        private async Task<List<PostServiceModel>?> GetAllFilteredPostsAsync(
+         string? searchTerm,
+         int currentPage,
+         int itemsPerPage,
+         IQueryable<PostServiceModel> posts)
+        {
+            var normalisedSearchTerm = searchTerm?.ToLower();
+            List<PostServiceModel>? filteredPosts = null;
+
+            if (normalisedSearchTerm != null)
+            {
+                 filteredPosts = await posts
+                  .Where(p => p.Title.ToLower().Contains(normalisedSearchTerm))
+                  .Skip((currentPage - 1) * itemsPerPage)
+                  .Take(itemsPerPage)
+                  .ToListAsync();
+            }
+
+            return filteredPosts;
+        }
+
+
     }
 }
