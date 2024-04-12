@@ -112,7 +112,7 @@ namespace MetamodulTradeApp.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> Remove(int id)
+        public async Task<IActionResult> Delete(int id)
         {
 
             var post = await postService.GetPostByIdAsync(id);
@@ -121,12 +121,19 @@ namespace MetamodulTradeApp.Controllers
             {
                 return BadRequest();
             }
+
+            var model = new PostDeleteFormViewModel()
+            {
+                Id = post.Id,
+                CreatedOn = DateTime.Parse(post.CreatedOn),
+                Title = post.Title,
+            };
                 
-            return View(post);
+            return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> RemoveConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var post = await postService.GetPostByIdAsync(id);
 

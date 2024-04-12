@@ -1,4 +1,5 @@
 ﻿using MetamodulTradeApp.Core.Models.ClientRequest;
+using MetamodulTradeApp.Core.Services;
 using MetamodulTradeApp.Core.Services.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -103,5 +104,30 @@ namespace MetamodulTradeApp.Controllers
 
             return RedirectToAction(nameof(Index)); 
         }
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+          
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var post = await clientRequestService.(id);
+
+            if (post == null)
+            {
+                return BadRequest();
+            }
+
+            await postService.RemovePostAsync(id);
+
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }

@@ -26,7 +26,7 @@
                 @if (this?.User?.Identity?.Name == Model.Creator)
                 {
                     <a class="btn btn-warning" asp-controller="Post" asp-action="Edit" asp-route-id="@Model.Id">Редактирай</a>
-                    <a class="ml-2 btn btn-danger" asp-controller="Post" asp-action="Remove" asp-route-id="@Model.Id">Изтрий</a>
+                    <a class="ml-2 btn btn-danger" asp-controller="Post" asp-action="Delete" asp-route-id="@Model.Id">Изтрий</a>
             
                 }
 

@@ -60,7 +60,7 @@ namespace MetamodulTradeApp.Core.Services
                     Topic = c.Topic,
                     CreatedOn = c.CreatedOn.ToString(),
                     Creator = c.Creator.UserName,
-                    CreatorId = cr.Creator.Id
+                    CreatorId = c.Creator.Id
                 });
 
             var filteredRequests = await GetAllFilteredRequestsAsync(currentPage, requestsPerPage, requests);
@@ -89,7 +89,7 @@ namespace MetamodulTradeApp.Core.Services
                     Topic = c.Topic,
                     CreatedOn = c.CreatedOn.ToString(),
                     Creator = c.Creator.UserName,
-                    CreatorId = cr.Creator.Id
+                    CreatorId = c.Creator.Id
                 })
                 .OrderByDescending(c => DateTime.Parse(c.CreatedOn));
 

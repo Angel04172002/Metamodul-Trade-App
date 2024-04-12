@@ -1,4 +1,6 @@
 ﻿using MetamodulTradeApp.Core.Models.Comment;
+using MetamodulTradeApp.Core.Models.Post;
+using MetamodulTradeApp.Core.Services;
 using MetamodulTradeApp.Core.Services.Contracts;
 using MetamodulTradeApp.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -16,7 +18,7 @@ namespace MetamodulTradeApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Add()
+        public IActionResult Add()
         {
             var model = new CommentFormViewModel();
 
@@ -33,7 +35,7 @@ namespace MetamodulTradeApp.Controllers
 
             await commentService.AddCommentAsync(model);
 
-            return RedirectToAction();
+            return RedirectToAction("Details", "Post", new { id = model.PostId });
         }
 
         [HttpGet]
@@ -52,13 +54,25 @@ namespace MetamodulTradeApp.Controllers
                 return Unauthorized();
             }
 
+            var model = new CommentFormViewModel()
+            {
+                Text = comment.Text,
+                PostId = comment.PostId,
+                CreatorId = comment.CreatorId
+            };
 
-            return RedirectToAction();
+            return View(model);
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(int id,  CommentFormViewModel model)
         {
+            var comment = await commentService.GetCommentByIdAsync(id);
+
+            if (comment == null)
+            {
+                return BadRequest();
+            }
 
             if (model.CreatorId != User.Id())
             {
@@ -72,13 +86,41 @@ namespace MetamodulTradeApp.Controllers
 
             await commentService.EditCommentAsync(id, model);
 
-            return RedirectToAction();
+            return RedirectToAction("Details", "Post", new { id = model.PostId });
         }
 
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            return RedirectToAction();
+            var comment = await commentService.GetCommentByIdAsync(id);
+
+            if (comment == null)
+            {
+                return BadRequest();
+            }
+
+            var model = new CommentDeleteFormViewModel()
+            {
+                Text = comment.Text,
+                CreatedOn = comment.CreatedOn
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var comment = await commentService.GetCommentByIdAsync(id);
+
+            if (comment == null)
+            {
+                return BadRequest();
+            }
+
+            await commentService.DeleteCommentAsync(id);
+
+            return RedirectToAction("Details", "Post", new { id });
         }
     }
 }

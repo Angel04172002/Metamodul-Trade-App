@@ -1,4 +1,6 @@
-﻿using MetamodulTradeApp.Core.Models.Product;
+﻿using MetamodulTradeApp.Core.Models.Post;
+using MetamodulTradeApp.Core.Models.Product;
+using MetamodulTradeApp.Core.Services;
 using MetamodulTradeApp.Core.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -119,15 +121,43 @@ namespace MetamodulTradeApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult Remove(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            return View();
+
+            var product = await productService.GetProductByIdAsync(id);
+
+            if (product == null)
+            {
+                return BadRequest();
+            }
+
+            var model = new ProductDeleteFormViewModel()
+            {
+                Id = product.Id,
+                CreatedOn = DateTime.Parse(product.CreatedOn),
+                Title = product.Name,
+                Price = product.Price
+            };
+
+            return View(model);
+
         }
 
+
         [HttpPost]
-        public async Task<IActionResult> Remove()
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            return View();
+            var product = await productService.GetProductByIdAsync(id);
+
+            if (product == null)
+            {
+                return BadRequest();
+            }
+
+            await productService.DeleteProductAsync(id);
+
+
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
