@@ -1,0 +1,22 @@
+﻿@model CommentDeleteFormViewModel
+
+
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title text-center">@Model.Text</h3>
+                <p class="mb-0"><strong>Дата:</strong> @Model.CreatedOn.ToString()</p>
+                <p class="text-danger mt-3">Сигурни ли сте че искате да изтриете този коментар?</p>
+            </div>
+            <div class="card-footer">
+                <form asp-action="DeleteConfirmed" method="post">
+                    <input type="hidden" asp-for="@Model.Id" />
+                    <button type="submit" class="btn btn-danger">Изтрий</button>
+                    <a asp-controller="Post" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-secondary">Назад</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

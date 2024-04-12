@@ -9,7 +9,9 @@
 
         public string CreatedOn { get; set; } = null!;
 
-    
+
+        public string Creator { get; set; } = string.Empty;
+
         public string CreatorId { get; set; } = string.Empty;
 
 

@@ -15,7 +15,8 @@
                 <div class="card-body">
                     <h5 class="card-title">@product.Name</h5>
                     <p class="card-text">@product.CreatedOn</p>
-                    <button asp-action="Details" asp-route-id="@product.Id" id="open-submit" type="submit" class="w-100 btn open-btn btn-primary">Отвори</button>
+
+                    <a asp-action="Details" asp-route-id="@product.Id" id="open-submit" type="submit" class="w-100 btn open-btn btn-primary">Отвори</a>
                 </div>
             </div>
         </div>

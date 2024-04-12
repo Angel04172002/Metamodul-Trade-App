@@ -115,6 +115,29 @@ namespace MetamodulTradeApp.Core.Services
 
         }
 
+
+        public async Task<ProductDetailsViewModel?> GetDetailsAsync(int id)
+        {
+            return await context.Products
+                .AsNoTracking()
+                .Where(p => p.Id == id)
+                .Select(p => new ProductDetailsViewModel()
+                {
+                    Id = p.Id,
+                    Description = p.Description,
+                    ImageUrl = p.ImageUrl,
+                    CreatedOn = p.CreatedOn.ToString(),
+                    Name = p.Name,
+                    Creator = p.Creator.UserName,
+                    Category = p.Category.Name,
+                    Price = p.Price
+                })
+                .FirstOrDefaultAsync();
+
+        }
+
+
+
         public async Task<ProductAllViewModel> GetMyProductsAsync(
             string? userId, 
             string searchTerm = "", 

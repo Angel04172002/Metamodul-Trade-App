@@ -1,5 +1,19 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model ClientRequestFormViewModel
+
+
 @{
+    ViewBag.Title = "Добави заявка";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+
+
+<partial name="_ClientRequestFormPartial" model="@Model" />
+
+
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/layout.css" />
+    <link rel="stylesheet" href="~/css/contacts.css" />
+    <link rel="stylesheet" href="~/css/add-form-style.css" />
 }

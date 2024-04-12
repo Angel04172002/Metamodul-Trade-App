@@ -30,12 +30,12 @@ namespace MetamodulTradeApp.Controllers
         {
             if(ModelState.IsValid == false) 
             {
-                return View(model);
+                return RedirectToAction("Details", "Post", new { id = Request.QueryString });
             }
 
             await commentService.AddCommentAsync(model);
 
-            return RedirectToAction("Details", "Post", new { id = model.PostId });
+            return RedirectToAction("Details", "Post", new { id = Request.QueryString });
         }
 
         [HttpGet]
@@ -57,7 +57,7 @@ namespace MetamodulTradeApp.Controllers
             var model = new CommentFormViewModel()
             {
                 Text = comment.Text,
-                PostId = comment.PostId,
+                //PostId = comment.PostId,
                 CreatorId = comment.CreatorId
             };
 
@@ -86,7 +86,7 @@ namespace MetamodulTradeApp.Controllers
 
             await commentService.EditCommentAsync(id, model);
 
-            return RedirectToAction("Details", "Post", new { id = model.PostId });
+            return RedirectToAction("Details", "Post", new { id  });
         }
 
         [HttpGet]

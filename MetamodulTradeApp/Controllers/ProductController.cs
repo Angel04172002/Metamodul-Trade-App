@@ -93,6 +93,8 @@ namespace MetamodulTradeApp.Controllers
                 Price = product.Price,
             };
 
+            model.Categories = await productService.AllCategoriesAsync();
+
             return View(model);
         }
 
@@ -185,6 +187,20 @@ namespace MetamodulTradeApp.Controllers
         public async Task<IActionResult> Unlike()
         {
             return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            var productDetails = await productService.GetDetailsAsync(id);
+
+            if (productDetails == null)
+            {
+                return BadRequest();
+            }
+
+
+            return View(productDetails);
         }
     }
 }

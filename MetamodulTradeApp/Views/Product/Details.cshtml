@@ -1,0 +1,38 @@
+﻿@model ProductDetailsViewModel
+
+@{
+    ViewBag.Title = "Детайли за продукт";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+
+
+<div class="container" style="display:inline">
+    <div class="row">
+
+        <div class="col-5">
+            <img class="card-img-top" style="width: 25vw; height: 60vh"
+                 src="@Model.ImageUrl" alt="Post Image">
+        </div>
+
+        <div class="content-div card col-7 border-0">
+            <h2>@Model.Name</h2>
+            <p>@Model.Description</p>
+
+            <div class="form-inline">
+
+                @if (this?.User?.Identity?.Name == Model.Creator)
+                {
+                    <a class="btn btn-warning" asp-controller="Product" asp-action="Edit" asp-route-id="@Model.Id">Редактирай</a>
+                    <a class="ml-2 btn btn-danger" asp-controller="Product" asp-action="Delete" asp-route-id="@Model.Id">Изтрий</a>
+                }
+
+            </div>
+
+            <p>@Model.CreatedOn</p>
+
+        </div>
+    </div>
+</div>

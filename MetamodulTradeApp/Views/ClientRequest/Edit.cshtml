@@ -1,0 +1,21 @@
+﻿@model ClientRequestFormViewModel
+
+@{
+    ViewData["Title"] = "Редактирай заявка";
+}
+
+
+<h2 class="text-center">@ViewBag.Title</h2>
+
+<partial name="_ClientRequestFormPartial" model="@Model" />
+
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/add-form-style.css" />
+    <link rel="stylesheet" href="~/css/layout.css" />
+}
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

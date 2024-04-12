@@ -30,6 +30,9 @@ namespace MetamodulTradeApp.Core.Services.Contracts
         Task EditProductAsync(ProductFormViewModel model, int id);
         Task DeleteProductAsync(int id);
 
+
+        Task<ProductDetailsViewModel?> GetDetailsAsync(int id);
+
         Task<IEnumerable<ProductCategoryViewModel>> AllCategoriesAsync();
 
         Task<int> GetProductCategoryIdAsync(int id);

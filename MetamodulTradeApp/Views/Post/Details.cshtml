@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Детайли за публикация";
+    var commentModel = new CommentFormViewModel();
 }
 
 
@@ -39,7 +40,39 @@
 </div>
 
 
+<partial name="_CommentFormPartial"  model="@commentModel"/>
+
+
+@foreach(var comment in Model.Comments)
+{
+    <div class="card">
+        <div class="card-header">
+            <p>@comment.CreatedOn</p>
+            <p>@comment.Creator</p>
+        </div>
+
+        <div class="card-body">
+            <p>@comment.Text</p>
+        </div>
+
+
+
+        <div>
+
+            @if (User?.Identity?.Name == comment.Creator)
+            {
+
+                <a style="padding: 0.9em; display: block;" asp-controller="Comment" asp-action="Edit" asp-route-id="@comment.Id">Редактирай</a>
+                <a style="padding: 0.9em; display: block;" asp-controller="Comment" asp-action="Delete" asp-route-id="@comment.Id">Изтрий</a>
+            }
+
+
+        </div>
+
+    </div>
+}
+
 
 @section Styles {
-    <link rel="stylesheet" href="~/css//post-details.css" />
+    <link rel="stylesheet" href="~/css/post-details.css" />
 }

@@ -116,7 +116,8 @@ namespace MetamodulTradeApp.Core.Services
                     Topic = cr.Topic,
                     CreatedOn = cr.CreatedOn.ToString(),
                     Creator = cr.Creator.UserName,
-                    CreatorId = cr.Creator.Id
+                    CreatorId = cr.Creator.Id,
+                    PhoneNumber = cr.PhoneNumber
                 })
                 .FirstOrDefaultAsync();
                

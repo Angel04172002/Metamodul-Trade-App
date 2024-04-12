@@ -24,7 +24,7 @@ namespace MetamodulTradeApp.Core.Services
         {
             var comment = new Comment()
             {
-                PostId = model.PostId,
+                //PostId = model.PostId,
                 Text = model.Text,
                 CreatorId = model.CreatorId,
                 CreatedOn = DateTime.Now
@@ -69,6 +69,7 @@ namespace MetamodulTradeApp.Core.Services
                     Text = c.Text,
                     CreatedOn = c.CreatedOn.ToString(),
                     CreatorId = c.CreatorId,
+                    Creator = c.Creator.UserName
                 })
                 .FirstOrDefaultAsync();
         }

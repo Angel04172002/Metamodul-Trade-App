@@ -20,9 +20,27 @@
             <p>@request.Message</p>
             <p>@request.CreatedOn</p>
             <p>@request.Creator</p>
-
         </div>
+
+        @if (request.Creator == User?.Identity?.Name)
+        {
+
+
+
+           <div class="changeButtons">
+
+                <a class="edit-btn" style="padding: 0.9em; display: block;" asp-action="Edit" asp-route-id="@request.Id">Редактирай</a>
+                <a class="delete-btn" style="padding: 0.9em; display: block;" asp-action="Delete" asp-route-id="@request.Id">Изтрий</a>
+
+           </div>
+        }
+
     </div>
     
 }
 
+
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/client-request.css" />
+}
