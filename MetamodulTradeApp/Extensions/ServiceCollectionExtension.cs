@@ -13,6 +13,7 @@ namespace MetamodulTradeApp.Extensions
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IClientRequestService, ClientRequestService>();
+            services.AddScoped<ICommentService, CommentService>();
 
             return services;
         }

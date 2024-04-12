@@ -55,8 +55,25 @@ namespace MetamodulTradeApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var model = await clientRequestService.GetRequestByIdAsync(id);
+            var clientRequest = await clientRequestService.GetRequestByIdAsync(id);
 
+            if(clientRequest == null)
+            {
+                return BadRequest();
+            }
+
+            if(clientRequest.CreatorId != User.Id())
+            {
+                return Unauthorized();
+            }
+
+            var model = new ClientRequestFormViewModel()
+            {
+                Message = clientRequest.Message,
+                Topic = clientRequest.Topic,
+                PhoneNumber = clientRequest.PhoneNumber
+            };
+            
             return View(model);
         }
 
@@ -64,7 +81,20 @@ namespace MetamodulTradeApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int id, ClientRequestFormViewModel model)
         {
-            if(ModelState.IsValid == false)
+
+            var clientRequest = await clientRequestService.GetRequestByIdAsync(id);
+
+            if (clientRequest == null)
+            {
+                return BadRequest();
+            }
+
+            if (clientRequest.CreatorId != User.Id())
+            {
+                return Unauthorized();
+            }
+
+            if (ModelState.IsValid == false)
             {
                 return View(model);
             }

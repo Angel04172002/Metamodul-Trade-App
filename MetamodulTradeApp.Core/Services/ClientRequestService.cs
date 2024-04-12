@@ -59,7 +59,8 @@ namespace MetamodulTradeApp.Core.Services
                     Message = c.Message,
                     Topic = c.Topic,
                     CreatedOn = c.CreatedOn.ToString(),
-                    Creator = c.Creator.UserName
+                    Creator = c.Creator.UserName,
+                    CreatorId = cr.Creator.Id
                 });
 
             var filteredRequests = await GetAllFilteredRequestsAsync(currentPage, requestsPerPage, requests);
@@ -87,7 +88,8 @@ namespace MetamodulTradeApp.Core.Services
                     Message = c.Message,
                     Topic = c.Topic,
                     CreatedOn = c.CreatedOn.ToString(),
-                    Creator = c.Creator.UserName
+                    Creator = c.Creator.UserName,
+                    CreatorId = cr.Creator.Id
                 })
                 .OrderByDescending(c => DateTime.Parse(c.CreatedOn));
 
@@ -113,7 +115,8 @@ namespace MetamodulTradeApp.Core.Services
                     Message = cr.Message,
                     Topic = cr.Topic,
                     CreatedOn = cr.CreatedOn.ToString(),
-                    Creator = cr.Creator.UserName
+                    Creator = cr.Creator.UserName,
+                    CreatorId = cr.Creator.Id
                 })
                 .FirstOrDefaultAsync();
                
