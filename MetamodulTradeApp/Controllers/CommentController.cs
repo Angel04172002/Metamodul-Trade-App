@@ -99,6 +99,11 @@ namespace MetamodulTradeApp.Controllers
                 return BadRequest();
             }
 
+            if(comment.CreatorId != User.Id())
+            {
+                return Unauthorized();
+            }
+
             var model = new CommentDeleteFormViewModel()
             {
                 Text = comment.Text,
@@ -116,6 +121,11 @@ namespace MetamodulTradeApp.Controllers
             if (comment == null)
             {
                 return BadRequest();
+            }
+
+            if (comment.CreatorId != User.Id())
+            {
+                return Unauthorized();
             }
 
             await commentService.DeleteCommentAsync(id);

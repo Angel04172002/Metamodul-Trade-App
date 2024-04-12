@@ -20,7 +20,7 @@ namespace MetamodulTradeApp.Controllers
         {
             var requests = await clientRequestService.GetAllRequestsAsync(
                     model.CurrentPage,
-                  ClientRequestAllViewModel.ClientRequestsPerPage
+                   ClientRequestAllViewModel.ClientRequestsPerPage
                 );
 
 
@@ -110,21 +110,47 @@ namespace MetamodulTradeApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-          
-        }
 
+            var clientRequest = await clientRequestService.GetRequestByIdAsync(id);
 
-        [HttpPost]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var post = await clientRequestService.(id);
-
-            if (post == null)
+            if (clientRequest == null)
             {
                 return BadRequest();
             }
 
-            await postService.RemovePostAsync(id);
+            if (clientRequest.CreatorId != User.Id())
+            {
+                return Unauthorized();
+            }
+
+            var model = new ClientRequestDeleteFormViewModel()
+            {
+                Id = clientRequest.Id,
+                CreatedOn = DateTime.Parse(clientRequest.CreatedOn),
+                Title = clientRequest.Topic
+            };
+
+            return View(model);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var clientRequest = await clientRequestService.GetRequestByIdAsync(id);
+
+            if (clientRequest == null)
+            {
+                return BadRequest();
+            }
+
+            if (clientRequest.CreatorId != User.Id())
+            {
+                return Unauthorized();
+            }
+
+
+            await clientRequestService.RemoveRequestAsync(id);
 
             return RedirectToAction(nameof(Index));
         }
