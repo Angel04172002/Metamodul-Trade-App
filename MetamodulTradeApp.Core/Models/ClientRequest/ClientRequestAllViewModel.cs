@@ -1,18 +1,19 @@
-﻿namespace MetamodulTradeApp.Core.Models.ClientRequest
+﻿using MetamodulTradeApp.Core.Models.Post;
+
+namespace MetamodulTradeApp.Core.Models.ClientRequest
 {
     public class ClientRequestAllViewModel
     {
 
-        public int Id { get; set; }
+        public const int ClientRequestsPerPage = 6;
 
-   
-        public string Topic { get; set; } = string.Empty;
+        public int CurrentPage { get; set; } = 1;
 
-        public string Message { get; set; } = string.Empty;
+        public int TotalRequestsCount { get; set; }
 
-        public string CreatedOn { get; set; } = string.Empty;
 
-        public string CreatorId { get; set; } = string.Empty;
+        public IEnumerable<ClientRequestServiceModel> ClientRequests { get; set; }
+          = new List<ClientRequestServiceModel>();
 
 
     }

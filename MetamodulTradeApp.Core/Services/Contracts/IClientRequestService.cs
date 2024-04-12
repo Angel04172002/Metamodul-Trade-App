@@ -9,13 +9,21 @@ namespace MetamodulTradeApp.Core.Services.Contracts
 {
     public interface IClientRequestService
     {
-        Task<IEnumerable<ClientRequestAllViewModel>> GetAllRequestsAsync();
+        Task<ClientRequestAllViewModel> GetAllRequestsAsync(
+            int currentPage,
+            int requestsPerPage);
+
+        Task<ClientRequestServiceModel?> GetRequestByIdAsync(int id);
+
         Task AddRequestAsync(ClientRequestFormViewModel model);
 
         Task EditRequestAsync(ClientRequestFormViewModel model ,int id);
 
         Task RemoveRequestAsync(int id);
 
-        Task<IEnumerable<ClientRequestAllViewModel>> GetMyRequestsAsync(string userId);
+        Task<ClientRequestAllViewModel> GetMyRequestsAsync(
+            string userId,
+            int currentPage,
+            int requestsPerPage);
     }
 }

@@ -27,51 +27,9 @@
 </div>
 
 
-<div class="form-container text-center">
-
-    <h2 class="second-heading sub-heading text-center">Направи запитване</h2>
-
-    <form asp-controller = "ClientRequest" asp-action="Add" class="request-form">
+<partial name="_ClientRequestFormPartial" model="@Model" />
 
 
-        <div class ="row mb-3">
-            <div class="col-sm-10 form-group phone-div">
-                <label asp-for="@Model.PhoneNumber" class="phone-label" for="exampleFormControlInput1">Телефон</label>
-                <input name="phoneNumber" asp-for="@Model.PhoneNumber" type="text" class="form-control" id="exampleFormControlInput1">
-                <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
-
-            </div>
-        </div>
-
-
-
-        <div class="row mb-3">
-
-            <div class="col-sm-10 form-group topic-div">
-                <label asp-for="@Model.Topic" class="topic-label" for="exampleFormControlInput1">Тема</label>
-                <input name = "topic" asp-for="@Model.Topic" type="text" class="form-control" id="exampleFormControlInput1">
-                <span asp-validation-for="@Model.Topic" class="text-danger"></span>
-
-            </div>
-        </div>
-
-
-        <div class="row mb-3">
-
-            <div class="col-sm-10 form-group message-div">
-                <label asp-for="@Model.Message" class="comment-label" for="exampleFormControlTextarea1">Съобщение</label>
-                <textarea name="message" asp-for="@Model.Message" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                <span asp-validation-for="@Model.Message" class="text-danger"></span>
-            </div>
-
-        </div>
-
-        <div class="col-10">
-            <button id="request-submit-btn" type="submit" class="w-100 btn login-btn btn-primary">Изпрати</button>
-        </div>
-    </form>
-
-</div>
 
 
 @section Styles {

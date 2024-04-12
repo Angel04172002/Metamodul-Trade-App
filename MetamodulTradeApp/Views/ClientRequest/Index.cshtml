@@ -1,0 +1,28 @@
+﻿@model ClientRequestAllViewModel
+
+
+@{
+    ViewBag.Title = "Заявки на клиенти";
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+
+@foreach(var request in Model.ClientRequests)
+{
+    <div class="card">
+        <div class="card-header">
+            @request.Topic
+        </div>
+        <div class="card-body">
+
+            <p>@request.Message</p>
+            <p>@request.CreatedOn</p>
+            <p>@request.Creator</p>
+
+        </div>
+    </div>
+    
+}
+

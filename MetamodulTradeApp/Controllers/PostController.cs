@@ -18,11 +18,9 @@ namespace MetamodulTradeApp.Controllers
             postService = _postService;
         }
 
-        //Return view with all posts
         [HttpGet]
         public async Task<IActionResult> Index([FromQuery] PostAllViewModel model)
         {
-            //TODO: Implement searching by keyword
             
             var posts = await postService.GetAllPostsAsync(
                 model.SearchTerm
@@ -112,15 +110,33 @@ namespace MetamodulTradeApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
         [HttpGet]
-        public async Task<IActionResult> Remove()
+        public async Task<IActionResult> Remove(int id)
         {
-            return View();
+
+            var post = await postService.GetPostByIdAsync(id);
+
+            if(post == null)
+            {
+                return BadRequest();
+            }
+                
+            return View(post);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Remove(int id)
+        public async Task<IActionResult> RemoveConfirmed(int id)
         {
+            var post = await postService.GetPostByIdAsync(id);
+
+            if(post == null)
+            {
+                return BadRequest();
+            }
+
+            await postService.RemovePostAsync(id);
+
             return RedirectToAction(nameof(Index));
         }
 

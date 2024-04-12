@@ -1,0 +1,60 @@
+﻿@model ClientRequestFormViewModel
+
+@{
+    ViewBag.Title = "Добави заявка";
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+
+<div class="form-container text-center">
+
+    <h2 class="second-heading sub-heading text-center">Направи запитване</h2>
+
+    <form asp-controller="ClientRequest" asp-action="Add" method="post" class= "request-form">
+
+
+        <div class="row mb-3">
+            <div class="col-sm-10 form-group phone-div">
+                <label asp-for="@Model.PhoneNumber" class="phone-label" for="exampleFormControlInput1">Телефон</label>
+                <input  asp-for="@Model.PhoneNumber" type="text" class="form-control" id="exampleFormControlInput1">
+                <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
+
+            </div>
+        </div>
+
+
+
+        <div class="row mb-3">
+
+            <div class="col-sm-10 form-group topic-div">
+                <label asp-for="@Model.Topic" class="topic-label" for="exampleFormControlInput1">Тема</label>
+                <input asp-for="@Model.Topic" type="text" class="form-control" id="exampleFormControlInput1">
+                <span asp-validation-for="@Model.Topic" class="text-danger"></span>
+
+            </div>
+        </div>
+
+
+        <div class="row mb-3">
+
+            <div class="col-sm-10 form-group message-div">
+                <label asp-for="@Model.Message" class="comment-label" for="exampleFormControlTextarea1">Съобщение</label>
+                <textarea asp-for="@Model.Message" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <span asp-validation-for="@Model.Message" class="text-danger"></span>
+            </div>
+
+        </div>
+
+        <div class="col-10">
+            <input id="submit-btn" type="submit" class="w-100 btn btn-primary" value="Запази" />
+        </div>
+    </form>
+
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

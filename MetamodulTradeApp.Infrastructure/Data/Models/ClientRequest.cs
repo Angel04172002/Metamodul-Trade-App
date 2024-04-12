@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Metrics;
 using static MetamodulTradeApp.Infrastructure.Data.Constants.DataConstants;
 
 namespace MetamodulTradeApp.Infrastructure.Data.Models
@@ -34,9 +37,9 @@ namespace MetamodulTradeApp.Infrastructure.Data.Models
         [Comment("Client request's date of creation")]
         public DateTime CreatedOn { get; set; }
 
-        [Required]
+        [AllowNull]
         [Comment("Client Request's creator Identifier")]
-        public string CreatorId { get; set; } = string.Empty;
+        public string? CreatorId { get; set; }
 
         [ForeignKey(nameof(CreatorId))]
         public IdentityUser Creator { get; set; } = null!;

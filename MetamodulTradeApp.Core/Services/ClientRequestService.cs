@@ -1,4 +1,5 @@
 ﻿using MetamodulTradeApp.Core.Models.ClientRequest;
+using MetamodulTradeApp.Core.Models.Post;
 using MetamodulTradeApp.Core.Services.Contracts;
 using MetamodulTradeApp.Data;
 using MetamodulTradeApp.Infrastructure.Data.Models;
@@ -45,36 +46,77 @@ namespace MetamodulTradeApp.Core.Services
             } 
         }
 
-        public async Task<IEnumerable<ClientRequestAllViewModel>> GetAllRequestsAsync()
+        public async Task<ClientRequestAllViewModel> GetAllRequestsAsync(
+            int currentPage,
+            int requestsPerPage
+            )
         {
-            return await context.ClientRequests
+            var requests = context.ClientRequests
                 .AsNoTracking()
-                .Select(c => new ClientRequestAllViewModel()
+                .Select(c => new ClientRequestServiceModel()
                 {
                     Id = c.Id,
                     Message = c.Message,
                     Topic = c.Topic,
                     CreatedOn = c.CreatedOn.ToString(),
-                    CreatorId = c.CreatorId
-                })
-                .ToListAsync();
+                    Creator = c.Creator.UserName
+                });
+
+            var filteredRequests = await GetAllFilteredRequestsAsync(currentPage, requestsPerPage, requests);
+
+            return new ClientRequestAllViewModel()
+            {
+                ClientRequests = filteredRequests,
+                CurrentPage = currentPage,
+                TotalRequestsCount = filteredRequests.Count()
+            };
         }
 
-        public async Task<IEnumerable<ClientRequestAllViewModel>> GetMyRequestsAsync(string userId)
+        public async Task<ClientRequestAllViewModel> GetMyRequestsAsync(
+            string userId,
+            int currentPage,
+            int requestsPerPage
+            )
         {
-            return await context.ClientRequests
+            var requests = context.ClientRequests
                 .AsNoTracking()
                 .Where(c => c.CreatorId == userId)
-                .Select(c => new ClientRequestAllViewModel()
+                .Select(c => new ClientRequestServiceModel()
                 {
                     Id = c.Id,
                     Message = c.Message,
                     Topic = c.Topic,
                     CreatedOn = c.CreatedOn.ToString(),
-                    CreatorId = c.CreatorId
+                    Creator = c.Creator.UserName
                 })
-                .OrderByDescending(c => DateTime.Parse(c.CreatedOn))
-                .ToListAsync();
+                .OrderByDescending(c => DateTime.Parse(c.CreatedOn));
+
+
+            var filteredRequests = await GetAllFilteredRequestsAsync(currentPage, requestsPerPage, requests);
+
+            return new ClientRequestAllViewModel()
+            {
+                ClientRequests = filteredRequests,
+                CurrentPage = currentPage,
+                TotalRequestsCount = filteredRequests.Count()
+            };
+        }
+
+        public async Task<ClientRequestServiceModel?> GetRequestByIdAsync(int id)
+        {
+            return await context.ClientRequests
+                .AsNoTracking()
+                .Where(cr => cr.Id == id)
+                .Select(cr => new ClientRequestServiceModel()
+                {
+                    Id = cr.Id,
+                    Message = cr.Message,
+                    Topic = cr.Topic,
+                    CreatedOn = cr.CreatedOn.ToString(),
+                    Creator = cr.Creator.UserName
+                })
+                .FirstOrDefaultAsync();
+               
         }
 
         public async Task RemoveRequestAsync(int id)
@@ -87,5 +129,20 @@ namespace MetamodulTradeApp.Core.Services
                 await context.SaveChangesAsync();
             }
         }
+
+        private async Task<List<ClientRequestServiceModel>> GetAllFilteredRequestsAsync(
+         int currentPage,
+         int itemsPerPage,
+         IQueryable<ClientRequestServiceModel> requests)
+        {
+
+            List<ClientRequestServiceModel> filteredRequests = await requests
+                 .Skip((currentPage - 1) * itemsPerPage)
+                 .Take(itemsPerPage)
+                 .ToListAsync();
+
+            return filteredRequests;
+        }
+
     }
 }

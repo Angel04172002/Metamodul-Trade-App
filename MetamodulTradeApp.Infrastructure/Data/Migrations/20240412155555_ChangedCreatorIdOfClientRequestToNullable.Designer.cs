@@ -4,6 +4,7 @@ using MetamodulTradeApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MetamodulTradeApp.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240412155555_ChangedCreatorIdOfClientRequestToNullable")]
+    partial class ChangedCreatorIdOfClientRequestToNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,7 +72,7 @@ namespace MetamodulTradeApp.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(2023, 11, 12, 19, 2, 34, 557, DateTimeKind.Local).AddTicks(7779),
+                            CreatedOn = new DateTime(2023, 11, 12, 18, 55, 55, 426, DateTimeKind.Local).AddTicks(5593),
                             CreatorId = "506cd08d-e8d0-4d5c-9796-949558867648",
                             Message = "Съобщение от Петър",
                             PhoneNumber = "0882426666",
@@ -79,7 +81,7 @@ namespace MetamodulTradeApp.Infrastructure.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedOn = new DateTime(2023, 11, 12, 19, 2, 34, 557, DateTimeKind.Local).AddTicks(7826),
+                            CreatedOn = new DateTime(2023, 11, 12, 18, 55, 55, 426, DateTimeKind.Local).AddTicks(5631),
                             CreatorId = "506cd08d-e8d0-4d5c-9796-949558867648",
                             Message = "Съобщение 2 от Петър",
                             PhoneNumber = "0882426666",
@@ -88,7 +90,7 @@ namespace MetamodulTradeApp.Infrastructure.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedOn = new DateTime(2024, 2, 12, 19, 2, 34, 557, DateTimeKind.Local).AddTicks(7831),
+                            CreatedOn = new DateTime(2024, 2, 12, 18, 55, 55, 426, DateTimeKind.Local).AddTicks(5634),
                             CreatorId = "ece06352-f235-4345-94a7-1a2c12f03ac6",
                             Message = "Съобщение от Ангел",
                             PhoneNumber = "0888556753",
@@ -138,7 +140,7 @@ namespace MetamodulTradeApp.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(2023, 11, 12, 19, 2, 34, 557, DateTimeKind.Local).AddTicks(9359),
+                            CreatedOn = new DateTime(2023, 11, 12, 18, 55, 55, 426, DateTimeKind.Local).AddTicks(6851),
                             CreatorId = "ece06352-f235-4345-94a7-1a2c12f03ac6",
                             PostId = 1,
                             Text = "Откъде мога да си купя този продукт?"
@@ -146,7 +148,7 @@ namespace MetamodulTradeApp.Infrastructure.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedOn = new DateTime(2023, 11, 12, 19, 2, 34, 557, DateTimeKind.Local).AddTicks(9365),
+                            CreatedOn = new DateTime(2023, 11, 12, 18, 55, 55, 426, DateTimeKind.Local).AddTicks(6857),
                             CreatorId = "ece06352-f235-4345-94a7-1a2c12f03ac6",
                             PostId = 1,
                             Text = "Оставям ви имейл за връзка"
@@ -154,7 +156,7 @@ namespace MetamodulTradeApp.Infrastructure.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedOn = new DateTime(2024, 1, 12, 19, 2, 34, 557, DateTimeKind.Local).AddTicks(9368),
+                            CreatedOn = new DateTime(2024, 1, 12, 18, 55, 55, 426, DateTimeKind.Local).AddTicks(6859),
                             CreatorId = "506cd08d-e8d0-4d5c-9796-949558867648",
                             PostId = 3,
                             Text = "Много хубава статия!"
@@ -208,7 +210,7 @@ namespace MetamodulTradeApp.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(2023, 6, 12, 19, 2, 34, 557, DateTimeKind.Local).AddTicks(9194),
+                            CreatedOn = new DateTime(2023, 6, 12, 18, 55, 55, 426, DateTimeKind.Local).AddTicks(6693),
                             CreatorId = "ece06352-f235-4345-94a7-1a2c12f03ac6",
                             Description = "Описание на пост 1 за камиони",
                             ImageUrl = "https://i.stack.imgur.com/GsDIl.jpg",
@@ -217,7 +219,7 @@ namespace MetamodulTradeApp.Infrastructure.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedOn = new DateTime(2023, 12, 12, 19, 2, 34, 557, DateTimeKind.Local).AddTicks(9213),
+                            CreatedOn = new DateTime(2023, 12, 12, 18, 55, 55, 426, DateTimeKind.Local).AddTicks(6708),
                             CreatorId = "ece06352-f235-4345-94a7-1a2c12f03ac6",
                             Description = "Описание на пост 2 за природен газ",
                             ImageUrl = "https://i.stack.imgur.com/GsDIl.jpg",
@@ -226,7 +228,7 @@ namespace MetamodulTradeApp.Infrastructure.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedOn = new DateTime(2024, 3, 12, 19, 2, 34, 557, DateTimeKind.Local).AddTicks(9216),
+                            CreatedOn = new DateTime(2024, 3, 12, 18, 55, 55, 426, DateTimeKind.Local).AddTicks(6711),
                             CreatorId = "ece06352-f235-4345-94a7-1a2c12f03ac6",
                             Description = "Описание на пост 3 за масла",
                             ImageUrl = "https://i.stack.imgur.com/GsDIl.jpg",
@@ -292,7 +294,7 @@ namespace MetamodulTradeApp.Infrastructure.Migrations
                         {
                             Id = 1,
                             CategoryId = 2,
-                            CreatedOn = new DateTime(2024, 1, 12, 19, 2, 34, 557, DateTimeKind.Local).AddTicks(9757),
+                            CreatedOn = new DateTime(2024, 1, 12, 18, 55, 55, 426, DateTimeKind.Local).AddTicks(7155),
                             CreatorId = "ece06352-f235-4345-94a7-1a2c12f03ac6",
                             Description = "Моторно масло за двигател",
                             ImageUrl = "https://www.stitchandskein.com/media/2021/08/wheel-oil.jpg",
@@ -303,7 +305,7 @@ namespace MetamodulTradeApp.Infrastructure.Migrations
                         {
                             Id = 2,
                             CategoryId = 1,
-                            CreatedOn = new DateTime(2024, 1, 12, 19, 2, 34, 557, DateTimeKind.Local).AddTicks(9767),
+                            CreatedOn = new DateTime(2024, 1, 12, 18, 55, 55, 426, DateTimeKind.Local).AddTicks(7163),
                             CreatorId = "ece06352-f235-4345-94a7-1a2c12f03ac6",
                             Description = "Камион за превоз на машини",
                             ImageUrl = "https://www.stitchandskein.com/media/2021/08/wheel-oil.jpg",

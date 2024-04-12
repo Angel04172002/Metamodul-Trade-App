@@ -11,7 +11,8 @@ namespace MetamodulTradeApp.Extensions
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddScoped<IPostService, PostService>();
-            services.AddScoped<IProductService, ProductService>();  
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IClientRequestService, ClientRequestService>();
 
             return services;
         }
