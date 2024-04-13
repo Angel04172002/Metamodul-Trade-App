@@ -9,7 +9,7 @@ namespace MetamodulTradeApp.Core.Models.Post
         public int CurrentPage { get; set; } = 1;
 
         public int TotalPostsCount { get; set; }
-
+        
         public string SearchTerm { get; set; } = null!;
 
         public IEnumerable<PostServiceModel> Posts { get; set; }

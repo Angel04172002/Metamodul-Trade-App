@@ -2,7 +2,6 @@
 
 @{
     ViewBag.Title = "Детайли за публикация";
-    var commentModel = new CommentFormViewModel();
 }
 
 
@@ -40,7 +39,7 @@
 </div>
 
 
-<partial name="_CommentFormPartial"  model="@commentModel"/>
+<partial name="_CommentFormPartial"  model="@Model"/>
 
 
 @foreach(var comment in Model.Comments)

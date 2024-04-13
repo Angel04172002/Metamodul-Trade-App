@@ -1,4 +1,6 @@
-﻿namespace MetamodulTradeApp.Core.Models.Comment
+﻿using MetamodulTradeApp.Core.Models.Post;
+
+namespace MetamodulTradeApp.Core.Models.Comment
 {
     public class CommentAllViewModel
     {
@@ -16,6 +18,8 @@
 
 
         public int PostId { get; set; }
+
+        public PostServiceModel Post { get; set; } = null!;
 
     }
 }

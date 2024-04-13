@@ -32,7 +32,12 @@ namespace MetamodulTradeApp.Controllers
                 ,PostAllViewModel.PostsPerPage, 
                 model.CurrentPage);
 
-            return View(posts);
+
+            model.TotalPostsCount = posts.TotalPostsCount;
+            model.Posts = posts.Posts;
+            
+
+            return View(model);
         }
 
         [HttpGet]

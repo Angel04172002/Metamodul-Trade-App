@@ -34,20 +34,24 @@ namespace MetamodulTradeApp.Controllers
         }
 
         [HttpPost]
-        [GetQueryId]
-        public async Task<IActionResult> Add(CommentFormViewModel model)
+        public async Task<IActionResult> Add(int postId, string text)
         {
-            if(ModelState.IsValid == false) 
+            if(ModelState.IsValid) 
             {
-                var a = Request.GetDisplayUrl();
-                return RedirectToAction("Details", "Post", new { id = Request.QueryString });
+                var model = new CommentFormViewModel()
+                {
+                    PostId = postId,
+                    Text = text,
+                    CreatorId = User.Id()
+                };
 
-                
+                await commentService.AddCommentAsync(model);
             }
 
-            await commentService.AddCommentAsync(model);
+   
 
-            return RedirectToAction("Details", "Post", new { id = Request.QueryString });
+            return RedirectToAction("Details", "Post", new { id = postId });
+
         }
 
         [HttpGet]
@@ -69,7 +73,7 @@ namespace MetamodulTradeApp.Controllers
             var model = new CommentFormViewModel()
             {
                 Text = comment.Text,
-                //PostId = comment.PostId,
+                PostId = comment.PostId,
                 CreatorId = comment.CreatorId
             };
 
@@ -86,7 +90,7 @@ namespace MetamodulTradeApp.Controllers
                 return BadRequest();
             }
 
-            if (model.CreatorId != User.Id())
+            if (comment.CreatorId != User.Id())
             {
                 return Unauthorized();
             }
@@ -108,7 +112,7 @@ namespace MetamodulTradeApp.Controllers
 
  
 
-            return RedirectToAction("Details", "Post", new { id  });
+            return RedirectToAction("Details", "Post", new { id = model.PostId });
         }
 
         [HttpGet]
@@ -129,8 +133,10 @@ namespace MetamodulTradeApp.Controllers
             var model = new CommentDeleteFormViewModel()
             {
                 Text = comment.Text,
-                CreatedOn = comment.CreatedOn
+                CreatedOn = comment.CreatedOn,
+                Id = comment.PostId
             };
+ 
 
             return View(model);
         }
@@ -160,7 +166,7 @@ namespace MetamodulTradeApp.Controllers
                 return BadRequest();
             }
 
-            return RedirectToAction("Details", "Post", new { id });
+            return RedirectToAction("Details", "Post", new { id = comment.PostId });
         }
     }
 }

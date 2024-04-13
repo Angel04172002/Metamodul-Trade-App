@@ -1,10 +1,43 @@
 ﻿@model CommentFormViewModel
 
 
-<partial name="_CommentFormPartial" model="@Model" />
+
+<div class="form-container text-center">
+
+
+    <form asp-controller="Comment" method="post" class="request-form">
+
+        <input type="hidden" name="PostId" value="@Model.PostId" />
+
+
+        <div class="row mb-3">
+            <div class="col-sm-10 form-group message-div">
+                <label asp-for="@Model.Text" class="comment-label" for="exampleFormControlTextarea2">Коментар</label> 
+                <textarea name="Text" class="form-control" id="exampleFormControlTextarea2" rows="3"></textarea>
+                <span asp-validation-for="@Model.Text" class="text-danger"></span> 
+            </div>
+        </div>
+
+
+
+        <div class="col-10">
+            <input id="submit-btn" type="submit" class="w-100 btn btn-primary" value="Запази" />
+        </div>
+    </form>
+
+</div>
+
+
+
 
 
 
 @section Styles {
     <link rel="stylesheet" href="~/css/post-details.css" />
 }
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

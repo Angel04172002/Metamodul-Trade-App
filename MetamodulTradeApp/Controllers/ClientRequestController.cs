@@ -1,6 +1,5 @@
 ﻿using MetamodulTradeApp.Core.Exceptions;
 using MetamodulTradeApp.Core.Models.ClientRequest;
-using MetamodulTradeApp.Core.Services;
 using MetamodulTradeApp.Core.Services.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;

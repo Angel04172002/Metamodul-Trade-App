@@ -5,6 +5,7 @@ using MetamodulTradeApp.Core.Services.Contracts;
 using MetamodulTradeApp.Data;
 using MetamodulTradeApp.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace MetamodulTradeApp.Core.Services
 {
@@ -110,14 +111,15 @@ namespace MetamodulTradeApp.Core.Services
                 });
 
 
-            var filteredProducts = await GetAllFilteredProductsAsync(searchTerm, currentPage, itemsPerPage, products);
+            var filteredProducts = await GetAllFilteredProductsAsync(currentPage, itemsPerPage, products, searchTerm);
 
 
             return new ProductAllViewModel()
             {
                 Products = filteredProducts == null ? products : filteredProducts,
                 CurrentPage = currentPage,
-                TotalProductsCount = products.Count()
+                TotalProductsCount = products.Count(),
+                SearchTerm = searchTerm
             };
 
 
@@ -168,13 +170,14 @@ namespace MetamodulTradeApp.Core.Services
                     Creator = up.Product.Creator.UserName,
                 });
 
-            var filteredProducts = await GetAllFilteredProductsAsync("", currentPage, itemsPerPage, userProducts);
+            var filteredProducts = await GetAllFilteredProductsAsync(currentPage, itemsPerPage, userProducts, searchTerm);
 
             return new ProductAllViewModel()
             {
                 Products = filteredProducts,
                 CurrentPage = currentPage,
-                TotalProductsCount = userProducts.Count()
+                TotalProductsCount = userProducts.Count(),
+                SearchTerm = searchTerm
             };
         }
 
@@ -206,53 +209,76 @@ namespace MetamodulTradeApp.Core.Services
                 .FirstOrDefaultAsync();     
         }
 
-        public async Task LikeProductAsync(string? userId, int productId)
+        public async Task LikeProductAsync(string userId, int productId)
         {
+
+            context.UsersProducts.Add(new UserProduct()
+            {
+                UserId = userId,
+                ProductId = productId
+            });
+
+            await context.SaveChangesAsync();
+
+        }
+
+        public async Task<bool> ProductExistsByIdAsync(int id)
+        {
+            return await context.Products
+                .AnyAsync(p => p.Id == id);
+        }
+
+        public async Task UnlikeProductAsync(string userId, int productId)
+        {
+            var userProduct = await context.UsersProducts
+                 .FirstOrDefaultAsync(up => up.UserId == userId && up.ProductId == productId);
+
+            if (userProduct != null)
+            {
+                context.UsersProducts.Remove(userProduct);
+                await context.SaveChangesAsync();
+            }
+            else
+            {
+                throw new NullEntityModelException("User Product Entity is null!");
+            }
+        }
+
+        public async Task<bool> UserProductExistsAsync(string userId, int productId)
+        {
+
             var userProduct = await context.UsersProducts
                 .FirstOrDefaultAsync(up => up.UserId == userId && up.ProductId == productId);
 
-            if (userProduct == null)
-            {
-                context.UsersProducts.Add(new UserProduct()
-                {
-                    UserId = userId,
-                    ProductId = productId
-                });
-
-                await context.SaveChangesAsync();
-            }
-
+            return userProduct != null;
         }
-
-        public Task UnlikeProductAsync()
-        {
-            throw new NotImplementedException();
-        }
-
 
         private async Task<List<ProductServiceModel>?> GetAllFilteredProductsAsync(
-            string? searchTerm, 
             int currentPage, 
             int itemsPerPage,
-            IQueryable<ProductServiceModel> products)
+            IQueryable<ProductServiceModel> products,
+            string searchTerm = "")
         {
             var normalisedSearchTerm = searchTerm?.ToLower();
-            List<ProductServiceModel>? filteredProducts = null;
+
+
+            var filteredProducts = products
+                      .Skip((currentPage - 1) * itemsPerPage)
+                      .Take(itemsPerPage);
 
             if (normalisedSearchTerm != null)
             {
 
-                filteredProducts = await products
-                      .Where(p => p.Name.ToLower().Contains(normalisedSearchTerm) ||
-                                  p.Category.ToLower().Contains(normalisedSearchTerm))
-                      .Skip((currentPage - 1) * itemsPerPage)
-                      .Take(itemsPerPage)
-                      .ToListAsync();
+                filteredProducts = filteredProducts
+                   .Where(p => p.Name.ToLower().Contains(normalisedSearchTerm) ||
+                               p.Category.ToLower().Contains(normalisedSearchTerm));
+      
             }
 
+            var materializedProducts = await filteredProducts.ToListAsync();
   
 
-            return filteredProducts;
+            return materializedProducts;
         }
     }
 }

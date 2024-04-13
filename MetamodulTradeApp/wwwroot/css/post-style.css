@@ -53,3 +53,12 @@
         justify-content: center;
     }
 
+
+    .like-btn {
+        margin-top: 0.8em;
+    }
+
+
+.unlike-btn {
+    margin-top: 0.8em;
+}

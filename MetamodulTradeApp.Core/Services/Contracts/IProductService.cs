@@ -22,9 +22,9 @@ namespace MetamodulTradeApp.Core.Services.Contracts
 
         Task<ProductDetailsViewModel?> GetProductByIdAsync(int id);
 
-        Task LikeProductAsync(string? userId, int productId);
+        Task LikeProductAsync(string userId, int productId);
 
-        Task UnlikeProductAsync();
+        Task UnlikeProductAsync(string userId, int productId);
 
         Task AddProductAsync(ProductFormViewModel model);
         Task EditProductAsync(ProductFormViewModel model, int id);
@@ -38,5 +38,9 @@ namespace MetamodulTradeApp.Core.Services.Contracts
         Task<int> GetProductCategoryIdAsync(int id);
 
         Task<bool> CategoryExistsAsync(int id);
+
+        Task<bool> ProductExistsByIdAsync(int id);
+
+        Task<bool> UserProductExistsAsync(string userId, int productId);
     }
 }

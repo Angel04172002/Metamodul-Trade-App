@@ -31,8 +31,10 @@ namespace MetamodulTradeApp.Controllers
                 ProductAllViewModel.ProductsPerPage,
                 model.CurrentPage);
 
+            model.TotalProductsCount = products.TotalProductsCount;
+            model.Products = products.Products;
 
-            return View(products);
+            return View(model);
         }
 
 
@@ -186,7 +188,11 @@ namespace MetamodulTradeApp.Controllers
         public async Task<IActionResult> Mine([FromQuery] ProductAllViewModel model)
         {
             var userId = User.Id();
-            var products = await productService.GetMyProductsAsync(userId);
+            var products = await productService.GetMyProductsAsync(
+                userId,
+                "",
+                ProductAllViewModel.ProductsPerPage,
+                model.CurrentPage);
 
             return View(products);
         }
@@ -195,18 +201,45 @@ namespace MetamodulTradeApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Like(int id)
         {
+    
+            if(await productService.ProductExistsByIdAsync(id) == false)
+            {
+                return BadRequest();
+            }
+
             var userId = User.Id();
 
-            await productService.LikeProductAsync(userId, id);
+            if(await productService.UserProductExistsAsync(userId, id) == false)
+            {
+                await productService.LikeProductAsync(userId, id);
+            }
 
             return RedirectToAction(nameof(Mine));
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> Unlike()
+        public async Task<IActionResult> Unlike(int id)
         {
-            return View();
+            if (await productService.ProductExistsByIdAsync(id) == false)
+            {
+                return BadRequest();
+            }
+
+            var userId = User.Id();
+
+
+            try
+            {
+                await productService.UnlikeProductAsync(userId, id);
+            }
+            catch(NullEntityModelException neme)
+            {
+                logger.LogError(neme, "ProductController/Unlike");
+            }
+          
+
+            return RedirectToAction(nameof(Mine));
         }
 
         [HttpGet]

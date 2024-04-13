@@ -70,14 +70,15 @@ namespace MetamodulTradeApp.Core.Services
                     Creator = p.Creator.UserName
                 });
 
-            var filteredPosts = await GetAllFilteredPostsAsync(searchTerm, currentPage, itemsPerPage, posts);
+            var filteredPosts = await GetAllFilteredPostsAsync(currentPage, itemsPerPage, posts, searchTerm);
 
 
             return new PostAllViewModel()
             {
                 Posts = filteredPosts == null ? posts : filteredPosts,
                 CurrentPage = currentPage,
-                TotalPostsCount = posts.Count()
+                TotalPostsCount = posts.Count(),
+                SearchTerm = searchTerm
             };
         }
 
@@ -85,6 +86,7 @@ namespace MetamodulTradeApp.Core.Services
         {
             return await context.Posts
                 .AsNoTracking()
+                .Include(p => p.Comments)
                 .Where(p => p.Id == id)
                 .Select(p => new PostDetailsViewModel()
                 {
@@ -100,7 +102,8 @@ namespace MetamodulTradeApp.Core.Services
                         CreatedOn = c.CreatedOn.ToString(),
                         CreatorId = c.CreatorId,
                         Text = c.Text,
-                        PostId = c.PostId
+                        PostId = c.PostId,
+                        Creator = c.Creator.UserName
                     })
                     .ToList()
                 })
@@ -142,24 +145,27 @@ namespace MetamodulTradeApp.Core.Services
 
 
         private async Task<List<PostServiceModel>?> GetAllFilteredPostsAsync(
-         string? searchTerm,
          int currentPage,
          int itemsPerPage,
-         IQueryable<PostServiceModel> posts)
+         IQueryable<PostServiceModel> posts,
+         string searchTerm = "")
         {
             var normalisedSearchTerm = searchTerm?.ToLower();
-            List<PostServiceModel>? filteredPosts = null;
 
-            if (normalisedSearchTerm != null)
-            {
-                 filteredPosts = await posts
-                  .Where(p => p.Title.ToLower().Contains(normalisedSearchTerm))
+
+            var filteredPosts = posts
                   .Skip((currentPage - 1) * itemsPerPage)
-                  .Take(itemsPerPage)
-                  .ToListAsync();
+                  .Take(itemsPerPage);
+
+            if(searchTerm != null)
+            {
+                filteredPosts = filteredPosts
+                    .Where(p => p.Title.ToLower().Contains(normalisedSearchTerm));
             }
 
-            return filteredPosts;
+            var materializedPosts = await filteredPosts.ToListAsync();
+
+            return materializedPosts;
         }
 
 
