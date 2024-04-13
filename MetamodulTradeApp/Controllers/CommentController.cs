@@ -1,9 +1,12 @@
-﻿using MetamodulTradeApp.Core.Models.Comment;
+﻿using MetamodulTradeApp.Attributes;
+using MetamodulTradeApp.Core.Models.Comment;
 using MetamodulTradeApp.Core.Models.Post;
 using MetamodulTradeApp.Core.Services;
 using MetamodulTradeApp.Core.Services.Contracts;
 using MetamodulTradeApp.Infrastructure.Data.Models;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Routing;
 using System.Security.Claims;
 
 namespace MetamodulTradeApp.Controllers
@@ -26,11 +29,15 @@ namespace MetamodulTradeApp.Controllers
         }
 
         [HttpPost]
+        [GetQueryId]
         public async Task<IActionResult> Add(CommentFormViewModel model)
         {
             if(ModelState.IsValid == false) 
             {
+                var a = Request.GetDisplayUrl();
                 return RedirectToAction("Details", "Post", new { id = Request.QueryString });
+
+                
             }
 
             await commentService.AddCommentAsync(model);
