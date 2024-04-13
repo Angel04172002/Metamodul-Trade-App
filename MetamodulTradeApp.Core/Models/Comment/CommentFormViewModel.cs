@@ -19,9 +19,10 @@ namespace MetamodulTradeApp.Core.Models.Comment
         public string? CreatedOn { get; set; } 
 
 
+
+
         public string? CreatorId { get; set; }
 
-
-        //public int PostId { get; set; }
+        public int PostId { get; set; }
     }
 }

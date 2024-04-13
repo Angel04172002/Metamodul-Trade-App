@@ -1,4 +1,5 @@
-﻿using MetamodulTradeApp.Core.Models.Post;
+﻿using MetamodulTradeApp.Core.Exceptions;
+using MetamodulTradeApp.Core.Models.Post;
 using MetamodulTradeApp.Core.Models.Product;
 using MetamodulTradeApp.Core.Services.Contracts;
 using MetamodulTradeApp.Data;
@@ -60,6 +61,10 @@ namespace MetamodulTradeApp.Core.Services
                 context.Products.Remove(product);
                 await context.SaveChangesAsync();
             }
+            else
+            {
+                throw new NullEntityModelException("Product entity model is null!");
+            }
 
         }
 
@@ -76,6 +81,10 @@ namespace MetamodulTradeApp.Core.Services
                 product.ImageUrl = model.ImageUrl;
 
                 await context.SaveChangesAsync();
+            }
+            else
+            {
+                throw new NullEntityModelException("Product entity model is null!");
             }
 
         }

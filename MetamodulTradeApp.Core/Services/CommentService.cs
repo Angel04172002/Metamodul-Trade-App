@@ -1,4 +1,5 @@
-﻿using MetamodulTradeApp.Core.Models.Comment;
+﻿using MetamodulTradeApp.Core.Exceptions;
+using MetamodulTradeApp.Core.Models.Comment;
 using MetamodulTradeApp.Core.Services.Contracts;
 using MetamodulTradeApp.Data;
 using MetamodulTradeApp.Infrastructure.Data.Models;
@@ -24,7 +25,7 @@ namespace MetamodulTradeApp.Core.Services
         {
             var comment = new Comment()
             {
-                //PostId = model.PostId,
+                PostId = model.PostId,
                 Text = model.Text,
                 CreatorId = model.CreatorId,
                 CreatedOn = DateTime.Now
@@ -43,6 +44,10 @@ namespace MetamodulTradeApp.Core.Services
                 context.Comments.Remove(comment);
                 await context.SaveChangesAsync();
             }
+            else
+            {
+                throw new NullEntityModelException("Comment entity model is null!");
+            }
         }
 
         public async Task EditCommentAsync(int id, CommentFormViewModel model)
@@ -53,6 +58,10 @@ namespace MetamodulTradeApp.Core.Services
             {
                 comment.Text = model.Text;
                 await context.SaveChangesAsync();
+            }
+            else
+            {
+                throw new NullEntityModelException("Comment entity model is null!");
             }
 
         }

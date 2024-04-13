@@ -1,4 +1,5 @@
-﻿using MetamodulTradeApp.Core.Models.ClientRequest;
+﻿using MetamodulTradeApp.Core.Exceptions;
+using MetamodulTradeApp.Core.Models.ClientRequest;
 using MetamodulTradeApp.Core.Models.Post;
 using MetamodulTradeApp.Core.Services.Contracts;
 using MetamodulTradeApp.Data;
@@ -44,6 +45,10 @@ namespace MetamodulTradeApp.Core.Services
 
                 await context.SaveChangesAsync();
             } 
+            else
+            {
+                throw new NullEntityModelException("Client request entity model is null!");
+            }
         }
 
         public async Task<ClientRequestAllViewModel> GetAllRequestsAsync(
@@ -131,6 +136,10 @@ namespace MetamodulTradeApp.Core.Services
             {
                 context.ClientRequests.Remove(clientRequest);
                 await context.SaveChangesAsync();
+            }
+            else
+            {
+                throw new NullEntityModelException("Client request entity model is null!");
             }
         }
 
