@@ -1,4 +1,5 @@
-﻿using MetamodulTradeApp.Core.Models.Post;
+﻿using MetamodulTradeApp.Core.Exceptions;
+using MetamodulTradeApp.Core.Models.Post;
 using MetamodulTradeApp.Core.Models.Product;
 using MetamodulTradeApp.Core.Services;
 using MetamodulTradeApp.Core.Services.Contracts;
@@ -12,10 +13,13 @@ namespace MetamodulTradeApp.Controllers
     public class ProductController : Controller
     {
         private readonly IProductService productService;
-
-        public ProductController(IProductService _productService)
+        private readonly ILogger logger;
+        public ProductController(
+            IProductService _productService,
+            ILogger<ProductController> _logger)
         {
             productService = _productService;
+            logger = _logger;
         }
 
 
@@ -115,8 +119,16 @@ namespace MetamodulTradeApp.Controllers
                 return View(model);
             }
 
+            try
+            {
 
-            await productService.EditProductAsync(model, id);
+                await productService.EditProductAsync(model, id);
+            }
+            catch (NullEntityModelException neme)
+            {
+                logger.LogError(neme, "ProductController/Edit");
+                return BadRequest();
+            }
 
 
             return RedirectToAction(nameof(Index));
@@ -156,7 +168,15 @@ namespace MetamodulTradeApp.Controllers
                 return BadRequest();
             }
 
-            await productService.DeleteProductAsync(id);
+            try
+            {
+                await productService.DeleteProductAsync(id);
+            }
+            catch (NullEntityModelException neme)
+            {
+                logger.LogError(neme, "ProductController/DeleteConfirmed");
+                return BadRequest();
+            }
 
 
             return RedirectToAction(nameof(Index));

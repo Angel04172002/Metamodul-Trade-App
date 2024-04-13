@@ -1,4 +1,5 @@
-﻿using MetamodulTradeApp.Core.Models.ClientRequest;
+﻿using MetamodulTradeApp.Core.Exceptions;
+using MetamodulTradeApp.Core.Models.ClientRequest;
 using MetamodulTradeApp.Core.Services;
 using MetamodulTradeApp.Core.Services.Contracts;
 using Microsoft.AspNetCore.Mvc;
@@ -9,10 +10,14 @@ namespace MetamodulTradeApp.Controllers
     public class ClientRequestController : Controller
     {
         private readonly IClientRequestService clientRequestService;
+        private readonly ILogger logger;
 
-        public ClientRequestController(IClientRequestService _clientRequestService)
+        public ClientRequestController(
+            IClientRequestService _clientRequestService,
+            ILogger<ClientRequestController> _logger)
         {
             clientRequestService = _clientRequestService;
+            logger = _logger;
         }
 
         [HttpGet]
@@ -100,7 +105,15 @@ namespace MetamodulTradeApp.Controllers
                 return View(model);
             }
 
-            await clientRequestService.EditRequestAsync(model, id);
+            try
+            {
+                await clientRequestService.EditRequestAsync(model, id);
+            }
+            catch(NullEntityModelException neme)
+            {
+                logger.LogError(neme, "ClientRequestController/Edit");
+                return BadRequest();
+            }
 
             return RedirectToAction(nameof(Index)); 
         }
@@ -149,8 +162,15 @@ namespace MetamodulTradeApp.Controllers
                 return Unauthorized();
             }
 
-
-            await clientRequestService.RemoveRequestAsync(id);
+            try
+            {
+                await clientRequestService.RemoveRequestAsync(id);
+            }
+            catch(NullEntityModelException neme)
+            {
+                logger.LogError(neme, "ClientRequestController/DeleteConfirmed");
+                return BadRequest();
+            }
 
             return RedirectToAction(nameof(Index));
         }

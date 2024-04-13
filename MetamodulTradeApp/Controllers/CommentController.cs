@@ -1,4 +1,5 @@
 ﻿using MetamodulTradeApp.Attributes;
+using MetamodulTradeApp.Core.Exceptions;
 using MetamodulTradeApp.Core.Models.Comment;
 using MetamodulTradeApp.Core.Models.Post;
 using MetamodulTradeApp.Core.Services;
@@ -14,10 +15,14 @@ namespace MetamodulTradeApp.Controllers
     public class CommentController : Controller
     {
         private readonly ICommentService commentService;
+        private readonly ILogger logger;
 
-        public CommentController(ICommentService _commentService)
+        public CommentController(
+            ICommentService _commentService,
+            ILogger<CommentController> _logger)
         {
             commentService = _commentService;
+            logger = _logger;
         }
 
         [HttpGet]
@@ -91,7 +96,17 @@ namespace MetamodulTradeApp.Controllers
                 return View(model);
             }
 
-            await commentService.EditCommentAsync(id, model);
+            try
+            {
+                await commentService.EditCommentAsync(id, model);
+            }
+            catch(NullEntityModelException neme)
+            {
+                logger.LogError(neme, "CommentController/Edit");
+                return BadRequest();
+            }
+
+ 
 
             return RedirectToAction("Details", "Post", new { id  });
         }
@@ -135,7 +150,15 @@ namespace MetamodulTradeApp.Controllers
                 return Unauthorized();
             }
 
-            await commentService.DeleteCommentAsync(id);
+            try
+            {
+                await commentService.DeleteCommentAsync(id);
+            }
+            catch (NullEntityModelException neme)
+            {
+                logger.LogError(neme, "CommentController/DeleteConfirmed");
+                return BadRequest();
+            }
 
             return RedirectToAction("Details", "Post", new { id });
         }

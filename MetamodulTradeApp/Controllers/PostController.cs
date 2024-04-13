@@ -1,4 +1,5 @@
-﻿using MetamodulTradeApp.Core.Models.Post;
+﻿using MetamodulTradeApp.Core.Exceptions;
+using MetamodulTradeApp.Core.Models.Post;
 using MetamodulTradeApp.Core.Services.Contracts;
 using MetamodulTradeApp.Infrastructure.Data.Constants;
 using Microsoft.AspNetCore.Authorization;
@@ -12,10 +13,14 @@ namespace MetamodulTradeApp.Controllers
     public class PostController : Controller
     {
         private readonly IPostService postService;
+        private readonly ILogger logger;
 
-        public PostController(IPostService _postService)
+        public PostController(
+            IPostService _postService,
+            ILogger<PostController> _logger)
         {
             postService = _postService;
+            logger = _logger;
         }
 
         [HttpGet]
@@ -105,7 +110,17 @@ namespace MetamodulTradeApp.Controllers
                 return View(model);
             }
 
-            await postService.EditPostAsync(model, id);
+            try
+            { 
+
+                await postService.EditPostAsync(model, id);
+
+            }
+            catch (NullEntityModelException neme)
+            {
+                logger.LogError(neme, "PostController/Edit");
+                return BadRequest();
+            }
 
             return RedirectToAction(nameof(Index));
         }
@@ -142,7 +157,15 @@ namespace MetamodulTradeApp.Controllers
                 return BadRequest();
             }
 
-            await postService.RemovePostAsync(id);
+            try
+            {
+                await postService.RemovePostAsync(id);
+            }
+            catch (NullEntityModelException neme)
+            {
+                logger.LogError(neme, "PostController/DeleteConfirmed");
+                return BadRequest();
+            }
 
             return RedirectToAction(nameof(Index));
         }
