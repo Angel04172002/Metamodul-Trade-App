@@ -1,4 +1,3 @@
-using MetamodulTradeApp.Attributes;
 using MetamodulTradeApp.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
