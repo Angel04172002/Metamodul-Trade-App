@@ -36,6 +36,7 @@ namespace MetamodulTradeApp.Data
             builder.ApplyConfiguration(new ProductCategoryConfiguration());
             builder.ApplyConfiguration(new ProductConfiguration());
             builder.ApplyConfiguration(new UserProductConfiguration());
+            builder.ApplyConfiguration(new AdminConfiguration());
         }
     }
 }
