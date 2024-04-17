@@ -16,7 +16,7 @@
                 <p class="text-danger mt-3">Сигурни ли сте че искате да изтриете този продукт?</p>
             </div>
             <div class="card-footer">
-                <form asp-action="DeleteConfirmed" method="post">
+                <form asp-area="Admin" asp-action="DeleteConfirmed" method="post">
                     <input type="hidden" asp-for="Id" />
                     <button type="submit" class="btn btn-danger">Изтрий</button>
                     <a asp-action="Index" class="btn btn-secondary">Назад</a>
@@ -25,3 +25,4 @@
         </div>
     </div>
 </div>
+

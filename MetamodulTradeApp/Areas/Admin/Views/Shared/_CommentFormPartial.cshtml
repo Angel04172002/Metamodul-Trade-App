@@ -12,7 +12,9 @@
 
         <div class="row mb-3">
             <div class="col-sm-10 form-group message-div">
+                @* <label asp-for="@Model.Text" class="comment-label" for="exampleFormControlTextarea2">Коментар</label>  *@
                 <textarea name="Text" class="form-control" id="exampleFormControlTextarea2" rows="3"></textarea>
+                @*<span asp-validation-for="@Model.Text" class="text-danger"></span> *@
             </div>
         </div>
 

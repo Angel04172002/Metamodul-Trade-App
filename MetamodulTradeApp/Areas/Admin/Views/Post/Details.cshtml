@@ -1,5 +1,4 @@
-﻿
-@model PostDetailsViewModel
+﻿@model PostDetailsViewModel
 
 @{
     ViewBag.Title = "Детайли за публикация";
@@ -24,12 +23,11 @@
 
             <div class="form-inline">
 
-                @if (this?.User?.Identity?.Name == Model.Creator)
-                {
+            
                     <a class="btn btn-warning" asp-controller="Post" asp-action="Edit" asp-route-id="@Model.Id">Редактирай</a>
                     <a class="ml-2 btn btn-danger" asp-controller="Post" asp-action="Delete" asp-route-id="@Model.Id">Изтрий</a>
             
-                }
+               
 
             </div>
 
@@ -39,21 +37,17 @@
     </div>
 </div>
 
-@if(User?.Identity?.IsAuthenticated == true)
-{
-    <partial name="_CommentFormPartial" model="@Model" />
-}
-else
-{
-    <p>Трябва да влезнете в системата, за да може да добавяте коментари</p>
-}
+
+<partial name="_CommentFormPartial"  model="@Model"/>
 
 
-@foreach(var comment in Model.Comments)
+
+@foreach (var comment in Model.Comments)
 {
     <partial name="_CommentPartial" model="@comment" />
 
 }
+
 
 
 @section Styles {

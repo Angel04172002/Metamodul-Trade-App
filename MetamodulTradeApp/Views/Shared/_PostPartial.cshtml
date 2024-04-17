@@ -1,0 +1,26 @@
+﻿@model PostServiceModel
+
+
+
+<div class="col">
+    <div class="card h-100">
+        <img src="@Model.ImageUrl" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">@Model.Title</h5>
+            <p class="card-text">@Model.CreatedOn</p>
+
+            @if (User?.Identity?.Name == Model.Creator)
+            {
+                <div style="display: flex; align-items: center; justify-content: center; gap: 2em; margin-bottom: 1em;" class="changeButtons">
+
+                    <a asp-area="" style="padding: 0.9em; display: block;" class="edit-btn" asp-controller="Post" asp-action="Edit" asp-route-id="@Model.Id"> Редактирай</a>
+                    <a asp-area="" style="padding: 0.9em; display: block;" class="delete-btn" asp-controller="Post" asp-action="Delete" asp-route-id="@Model.Id">Изтрий</a>
+
+                </div>
+            }
+
+            <a asp-area="" asp-action="Details" asp-route-id="@Model.Id" id="open-submit" type="submit" class="w-100 btn open-btn btn-primary">Отвори</a>
+
+        </div>
+    </div>
+</div>

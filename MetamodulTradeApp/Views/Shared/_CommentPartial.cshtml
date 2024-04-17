@@ -1,0 +1,28 @@
+﻿@model CommentAllViewModel
+
+
+<div class="card">
+    <div class="card-header">
+        <p>@Model.CreatedOn</p>
+        <p>@Model.Creator</p>
+    </div>
+
+    <div class="card-body">
+        <p>@Model.Text</p>
+    </div>
+
+
+
+    <div>
+
+        @if (User?.Identity?.Name == Model.Creator)
+        {
+
+            <a style="padding: 0.9em; display: block;" asp-controller="Comment" asp-action="Edit" asp-route-id="@Model.Id">Редактирай</a>
+            <a style="padding: 0.9em; display: block;" asp-controller="Comment" asp-action="Delete" asp-route-id="@Model.Id">Изтрий</a>
+        }
+
+
+    </div>
+
+</div>

@@ -14,6 +14,7 @@ namespace MetamodulTradeApp.Core.Services.Contracts
             int itemsPerPage,
             int currentPage);
 
+
         Task<PostDetailsViewModel?> GetPostByIdAsync(int id);
 
         Task AddPostAsync(PostFormViewModel model);

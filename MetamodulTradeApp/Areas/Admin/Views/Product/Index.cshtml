@@ -25,10 +25,6 @@
 
 <div class="row row-cols-1 row-cols-md-3 g-4">
 
-
-
-
-
     @foreach (var product in Model.Products)
     {
         <partial name="_ProductPartial" model="@product" />
@@ -75,4 +71,5 @@
 @section Styles {
     <link rel="stylesheet" href="~/css/post-style.css" />
     <link rel="stylesheet" href="~/css/layout.css" />
+    @* <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet"/> *@
 }

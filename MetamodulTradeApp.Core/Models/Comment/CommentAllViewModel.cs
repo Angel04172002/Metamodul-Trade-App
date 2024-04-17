@@ -9,7 +9,7 @@ namespace MetamodulTradeApp.Core.Models.Comment
         public string Text { get; set; } = string.Empty;
 
 
-        public string CreatedOn { get; set; } = null!;
+        public string CreatedOn { get; set; } = string.Empty;
 
 
         public string Creator { get; set; } = string.Empty;
